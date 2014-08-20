@@ -1,6 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
-
+#include "nuevo.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -14,6 +14,9 @@ class window : public QMainWindow
 public:
     explicit window(QWidget *parent = 0);
     ~window();
+
+private slots:
+    void on_nuevo_clicked();
 
 private:
     Ui::window *ui;

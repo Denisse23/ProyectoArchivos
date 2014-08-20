@@ -7,7 +7,7 @@ campos::campos(){
 campos::campos(QString n,QString t,int l,bool es){
     nombre=n;
     tipo=t;
-    longitud=l;
+    tamano=l;
     esllave=es;
 
 }//fin del constructor
@@ -22,8 +22,8 @@ QString campos:: getTipo(){
         return tipo;
 }
 
-int campos::getLongitud(){
-        return longitud;
+int campos::getTamano(){
+        return tamano;
 }
 
 bool campos::getEsLlave(){
@@ -38,9 +38,9 @@ void campos::setTipo(QString t){
         tipo=t;
 }
 
-void campos::setlongitud(int l){
+void campos::setTamano(int l){
 
-        longitud=l;
+        tamano=l;
 }
 
 void campos::setEsLlave(bool b){

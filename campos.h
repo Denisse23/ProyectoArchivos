@@ -8,18 +8,18 @@ public:
     campos();
     QString getNombre();
     QString getTipo();
-    int getLongitud();
+    int getTamano();
     bool getEsLlave();
 
     void setNombre(QString);
     void setTipo(QString);
-    void setlongitud(int);
+    void setTamano(int);
     void setEsLlave(bool);
 
 private:
     QString nombre;
     QString tipo;
-    int longitud;
+    int tamano;
     bool esllave;
 
 

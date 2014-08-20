@@ -14,9 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         window.cpp \
+    nuevo.cpp \
     campos.cpp
 
 HEADERS  += window.h \
+    nuevo.h \
     campos.h
 
-FORMS    += window.ui
+FORMS    += window.ui \
+    nuevo.ui

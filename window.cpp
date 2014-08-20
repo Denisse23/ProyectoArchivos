@@ -12,3 +12,10 @@ window::~window()
 {
     delete ui;
 }
+
+void window::on_nuevo_clicked()
+{
+    nuevo ventananuevo(this);
+    ventananuevo.setModal(true);
+    ventananuevo.exec();
+}
