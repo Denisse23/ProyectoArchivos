@@ -30,6 +30,10 @@ public:
 private slots:
     void on_pushButton_clicked();
 
+    void on_comboarchivos_registros_activated(const QString &arg1);
+
+    void on_boton_agregar_campo_clicked();
+
 private:
     QList<campos> camposa;
     QList<QString> camposllenados;
