@@ -51,15 +51,22 @@ void nuevo::on_bagregar_nuevo_clicked()
 
 void nuevo::on_bcrear_nuevo_clicked()
 {
+
     if(ui->lnombrearchivo_nuevo->text()!="" && ui->lnombrearchivo_nuevo->text()!="Ingrese un nombre de archivo" && listacampos.count()>0){
        //nombrando el archivo
         nombrearchivo= (ui->lnombrearchivo_nuevo->text()+".txt").toStdString();
+        ifstream verificar("archivoscreados.txt");
+
         char nombrea[30];
         int lennom = nombrearchivo.length();
         for(int i=0;i<lennom;i++)
             nombrea[i] = nombrearchivo[i];
         if(lennom<30)
             nombrea[lennom]='\0';
+        //agregar el nombre del archivo a "archivoscreados"
+        ofstream inscribir("archivoscreados.txt", fstream::app);
+        inscribir<<nombrea<<endl;
+        inscribir.close();
         //limpiar campos
         ui->lnombrearchivo_nuevo->setText("");
         ui->lnombrecampo_nuevo->setText("");
@@ -72,6 +79,8 @@ void nuevo::on_bcrear_nuevo_clicked()
             if(k.getNombre().length()>maxlnombre)
                 maxlnombre = k.getNombre().length();
         }
+        if(maxlnombre<6)
+            maxlnombre =6;
         QString mandar = "Campo Nombre";
         for(int i=0; i<=maxlnombre-7;i++)
             mandar += "-";
@@ -100,7 +109,7 @@ void nuevo::on_bcrear_nuevo_clicked()
        mandar+="***";
        ofstream file(nombrea);
        file<<mandar.toStdString()<<endl;
-
+       file.close();
 
 
         //Borrar tabla
