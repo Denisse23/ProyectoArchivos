@@ -6,7 +6,9 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QFile>
-
+#include <fstream>
+#include <QList>
+#include "campos.h"
 using namespace std;
 
 namespace Ui {
@@ -25,7 +27,12 @@ public:
     void setFile(QString);
     ~registros();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
+    QList<campos> camposa;
+    QList<QString> camposllenados;
     Ui::registros *ui;
 };
 

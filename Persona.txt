@@ -2,8 +2,8 @@ Campo Nombre------- Tipo   Tamaño Llave
 1---- Identificador Entero 4----- Si---
 2---- Nombre------- Char-- 30---- No---
 3---- Edad--------- Entero 2----- No---
-4---- País--------- Char-- 25---- No---
-***
+4---- Pais--------- Char-- 25---- No---
+|
 0--- Mannix-Mccarty---------------- 29 Cocos-(Keeling)-Islands--
 1--- Maggy-Whitehead--------------- 50 Faroe-Islands------------
 2--- Kimberley-Burks--------------- 29 Malta--------------------

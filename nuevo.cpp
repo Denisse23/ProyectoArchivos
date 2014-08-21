@@ -56,6 +56,16 @@ void nuevo::on_bcrear_nuevo_clicked()
        //nombrando el archivo
         nombrearchivo= (ui->lnombrearchivo_nuevo->text()+".txt").toStdString();
         ifstream verificar("archivoscreados.txt");
+        bool esta = false;
+        while(verificar.good()){
+            string comparar;
+            verificar >> comparar;
+            if(comparar == nombrearchivo)
+                esta = true;
+        }
+        verificar.close();
+        if(esta ==false){
+
 
         char nombrea[30];
         int lennom = nombrearchivo.length();
@@ -69,9 +79,6 @@ void nuevo::on_bcrear_nuevo_clicked()
         inscribir.close();
         //limpiar campos
         ui->lnombrearchivo_nuevo->setText("");
-        ui->lnombrecampo_nuevo->setText("");
-        ui->combollave_nuevo->setEnabled(true);
-        ui->combollave_nuevo->setItemText(1,"Si");
         //Crear archivo
         int maxlnombre = 0;
         int numca=1;
@@ -106,7 +113,7 @@ void nuevo::on_bcrear_nuevo_clicked()
 
             numca++;
        }
-       mandar+="***";
+       mandar+="|\n";
        ofstream file(nombrea);
        file<<mandar.toStdString()<<endl;
        file.close();
@@ -118,6 +125,12 @@ void nuevo::on_bcrear_nuevo_clicked()
             ui->tablacampos_nuevo->removeRow(0);
             listacampos.removeAt(0);
          }
+        }else{
+            ui->lnombrearchivo_nuevo->setText("El nombre ya exista, escoga otro");
+        }
+        ui->lnombrecampo_nuevo->setText("");
+        ui->combollave_nuevo->setEnabled(true);
+        ui->combollave_nuevo->setItemText(1,"Si");
     }else{
         if(listacampos.count()==0)
             ui->lnombrecampo_nuevo->setText("Agregar al menos un campo");

@@ -35,6 +35,12 @@
      <height>27</height>
     </rect>
    </property>
+   <property name="inputMask">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>26</number>
+   </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">

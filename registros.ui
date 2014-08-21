@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>507</width>
+    <height>429</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,124 +16,188 @@
   <widget class="QPushButton" name="boton_agregar_campo">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>240</y>
+     <x>180</x>
+     <y>370</y>
      <width>131</width>
-     <height>23</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Agregar Campo</string>
+    <string>Agregar Dato</string>
    </property>
   </widget>
   <widget class="QLabel" name="nombreCampo">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>30</y>
-     <width>91</width>
+     <x>30</x>
+     <y>100</y>
+     <width>151</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nombre de campo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Numero de campo:&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="entradaCampo">
+  <widget class="QLineEdit" name="lentradacampo_registros">
    <property name="geometry">
     <rect>
-     <x>140</x>
-     <y>200</y>
-     <width>113</width>
-     <height>20</height>
+     <x>100</x>
+     <y>330</y>
+     <width>271</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="inputMask">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="maxLength">
+    <number>32767</number>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Normal</enum>
+   </property>
+   <property name="dragEnabled">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QLabel" name="nombreCampo_2">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>60</y>
-     <width>91</width>
-     <height>16</height>
+     <x>30</x>
+     <y>180</y>
+     <width>131</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tipo del campo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tipo de campo:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="nombreCampo_3">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>90</y>
-     <width>91</width>
-     <height>16</height>
+     <x>30</x>
+     <y>220</y>
+     <width>151</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Longitud de campo&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tamaño de campo:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLabel" name="nombreCampo_4">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>120</y>
-     <width>91</width>
-     <height>16</height>
+     <x>30</x>
+     <y>260</y>
+     <width>131</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Es llave&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Es llave:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="DisplayNombre">
+  <widget class="QLineEdit" name="lnumcampo_archivos">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>30</y>
-     <width>113</width>
-     <height>20</height>
+     <x>220</x>
+     <y>100</y>
+     <width>41</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="DisplayTipo">
+  <widget class="QLineEdit" name="ltipodecampo_archivos">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>60</y>
-     <width>113</width>
-     <height>20</height>
+     <x>220</x>
+     <y>180</y>
+     <width>231</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="DisplayLongitud">
+  <widget class="QLineEdit" name="ltamanocampo_archivos">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>90</y>
-     <width>113</width>
-     <height>20</height>
+     <x>220</x>
+     <y>220</y>
+     <width>231</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="readOnly">
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QLineEdit" name="DisplayLLave">
+  <widget class="QLineEdit" name="lesllave_archivos">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>120</y>
-     <width>113</width>
-     <height>20</height>
+     <x>220</x>
+     <y>260</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="readOnly">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>10</y>
+     <width>161</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Cargar Archivos</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboarchivos_registros">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>50</y>
+     <width>241</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="nombreCampo_5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>140</y>
+     <width>161</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nombre de campo:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lnombrecampo_archivos">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>140</y>
+     <width>231</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="readOnly">
