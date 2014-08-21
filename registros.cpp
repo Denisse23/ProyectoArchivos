@@ -8,13 +8,20 @@ registros::registros(QWidget *parent) :
     ui->setupUi(this);
 }
 
-void registros::Operate(QString file2){
-    QFile file(file2);
+
+void registros::setFile(QString x){
+    mainfile.setFileName(x);
+}//fin del metodo
+
+void registros::Operate(){
+
+
+
     QStringList strings;
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (mainfile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         int cont=0;
-        QTextStream in(&file);
+        QTextStream in(&mainfile);
         while (!in.atEnd()) {
             if(cont!=0){
             strings += in.readLine().split(" ");

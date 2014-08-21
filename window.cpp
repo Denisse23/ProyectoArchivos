@@ -19,3 +19,15 @@ void window::on_nuevo_clicked()
     ventananuevo.setModal(true);
     ventananuevo.exec();
 }
+
+void window::on_agregar_clicked()
+{
+
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"),
+                                                     "",
+                                                     tr("Files (*.txt*)"));
+    registros r(this);
+    r.setModal(true);
+    r.exec();
+    r.setFile(fileName);
+}
