@@ -18,8 +18,11 @@ class registros : public QDialog
     Q_OBJECT
 
 public:
+
+    QFile mainfile;
     explicit registros(QWidget *parent = 0);
-    void Operate(QString);
+    void Operate();
+    void setFile(QString);
     ~registros();
 
 private:

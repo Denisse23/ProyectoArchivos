@@ -1,7 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 #include "nuevo.h"
+#include "registros.h"
 #include <QMainWindow>
+#include <QFileDialog>
+
 
 namespace Ui {
 class window;
@@ -17,6 +20,8 @@ public:
 
 private slots:
     void on_nuevo_clicked();
+
+    void on_agregar_clicked();
 
 private:
     Ui::window *ui;
