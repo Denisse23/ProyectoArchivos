@@ -73,29 +73,31 @@ void nuevo::on_bcrear_nuevo_clicked()
                 maxlnombre = k.getNombre().length();
         }
         QString mandar = "Campo Nombre";
-        for(int i=0; i<=maxlnombre-6;i++)
-            mandar += " ";
-        mandar += "Tipo  Tamaño Llave\n";
+        for(int i=0; i<=maxlnombre-7;i++)
+            mandar += "-";
+        mandar += " Tipo   Tamaño Llave\n";
         foreach (campos k, listacampos){
-            QString num = QString::number(numca)+" ";
-            mandar += num+"    "+k.getNombre();
-            for(int i=0; i<=(maxlnombre-k.getNombre().length());i++)
-                mandar+=" ";
+            QString num = QString::number(numca)+"-";
+            mandar += num+"--- "+k.getNombre();
+            for(int i=0; i<=(maxlnombre-k.getNombre().length())-1;i++)
+                mandar+="-";
+            mandar+=" ";
             if(k.getTipo()=="Entero")
                  mandar+=k.getTipo()+" ";
             else
-                mandar+=k.getTipo()+"   ";
+                mandar+=k.getTipo()+"-- ";
             if(k.getTamano()<10)
-                mandar+=QString::number(k.getTamano())+"     ";
+                mandar+=QString::number(k.getTamano())+"----- ";
             else
-                mandar+=QString::number(k.getTamano())+"    ";
+                mandar+=QString::number(k.getTamano())+"---- ";
             if(k.getEsLlave())
-                mandar+="Si\n";
+                mandar+="Si---\n";
             else
-                mandar+="No\n";
-            mandar+="***";
+                mandar+="No---\n";
+
             numca++;
        }
+       mandar+="***";
        ofstream file(nombrea);
        file<<mandar.toStdString()<<endl;
 
