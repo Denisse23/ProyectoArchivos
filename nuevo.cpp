@@ -81,20 +81,15 @@ void nuevo::on_bcrear_nuevo_clicked()
         ui->lnombrearchivo_nuevo->setText("");
         //Crear archivo
         int maxlnombre = 0;
-        int numca=1;
         foreach (campos k, listacampos){
             if(k.getNombre().length()>maxlnombre)
                 maxlnombre = k.getNombre().length();
         }
         if(maxlnombre<6)
             maxlnombre =6;
-        QString mandar = "Campo Nombre";
-        for(int i=0; i<=maxlnombre-7;i++)
-            mandar += "-";
-        mandar += " Tipo   Tamaño Llave\n";
+        QString mandar;
         foreach (campos k, listacampos){
-            QString num = QString::number(numca)+"-";
-            mandar += num+"--- "+k.getNombre();
+            mandar += k.getNombre();
             for(int i=0; i<=(maxlnombre-k.getNombre().length())-1;i++)
                 mandar+="-";
             mandar+=" ";
@@ -111,7 +106,6 @@ void nuevo::on_bcrear_nuevo_clicked()
             else
                 mandar+="No---\n";
 
-            numca++;
        }
        mandar+="|\n";
        ofstream file(nombrea);
