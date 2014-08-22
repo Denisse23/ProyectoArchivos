@@ -202,10 +202,10 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Registros agregados:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lnumregistros_registros">
+  <widget class="QLineEdit" name="lnumre_registros">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>210</x>
      <y>420</y>
      <width>41</width>
      <height>27</height>

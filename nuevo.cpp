@@ -20,11 +20,9 @@ void nuevo::on_bagregar_nuevo_clicked()
     QString tipo = ui->combotipo_nuevo->currentText();
     int tamano = ui->spintamano_nuevo->text().toInt();
     bool llave = false;
-    if(ui->combollave_nuevo->currentText()=="Si"){
+    if(ui->combollave_nuevo->currentText()=="Si")
         llave = true;
-        ui->combollave_nuevo->setVisible(false);
-        ui->combollave_nuevo->removeItem(1);
-    }
+
     if(campo!=""){
     bool disponible = true;
     foreach(campos k, listacampos){
@@ -46,6 +44,8 @@ void nuevo::on_bagregar_nuevo_clicked()
     }
     }
     ui->lnombrecampo_nuevo->setText("");
+    ui->combollave_nuevo->setVisible(false);
+    ui->combollave_nuevo->removeItem(1);
 
 }
 
@@ -108,6 +108,8 @@ void nuevo::on_bcrear_nuevo_clicked()
 
        }
        mandar+="|\n";
+       mandar+="-1\n";
+       mandar+="$\n";
        ofstream file(nombrea);
        file<<mandar.toStdString()<<endl;
        file.close();
@@ -131,4 +133,5 @@ void nuevo::on_bcrear_nuevo_clicked()
         else
             ui->lnombrearchivo_nuevo->setText("Ingrese un nombre de archivo");
     }
+
 }

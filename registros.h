@@ -35,6 +35,7 @@ private slots:
     void on_boton_agregar_campo_clicked();
 
 private:
+    QList<QString> llaves;
     QList<campos> camposa;
     QList<QString> camposllenados;
     Ui::registros *ui;
