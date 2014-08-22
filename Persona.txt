@@ -3,6 +3,8 @@ Nombre------- Char-- 30---- No---
 Edad--------- Entero 2----- No---
 Pais--------- Char-- 25---- No---
 |
+-1
+$
 0--- Mannix-Mccarty---------------- 29 Cocos-(Keeling)-Islands--
 1--- Maggy-Whitehead--------------- 50 Faroe-Islands------------
 2--- Kimberley-Burks--------------- 29 Malta--------------------
@@ -86,14 +88,14 @@ Pais--------- Char-- 25---- No---
 80-- Gretchen-Nicholson------------ 24 Indonesia----------------                                          
 81-- Stacey-Cook------------------- 24 Puerto-Rico--------------                                       
 82-- Hayden-Ellis------------------ 39 Niue---------------------                                               
-83-- James-Spence------------------ 46 Papua-New Guinea---------                                   
+83-- James-Spence------------------ 46 Papua-New-Guinea---------                                   
 84-- Erin-Boone-------------------- 36 Greece-------------------                                             
 85-- Jorden-Fuller----------------- 26 Cyprus-------------------                                             
 86-- Brian-Farley------------------ 24 Grenada------------------                                            
 87-- Bell-Fletcher----------------- 30 Spain--------------------                                              
 88-- Brennan-Franklin-------------- 27 Guyana-------------------                                             
-89-- Shaine-Glover----------------- 46 United-Kingdom-----------                     
-90-- Jerry-Carey------------------- 35 Poland-------------------                                             
+89-- Shaine-Glover----------------- 46 United-Kingdom-----------          
+90-- Jerry-Carey------------------- 35 Poland-------------------                                
 91-- Slade-Calderon---------------- 21 Cameroon-----------------                                           
 92-- Georgia-Velasquez------------- 34 Christmas-Island---------                                   
 93-- Kim-Hunter-------------------- 22 Iraq---------------------                                               
@@ -103,4 +105,5 @@ Pais--------- Char-- 25---- No---
 97-- Austin-West------------------- 43 Guinea-Bissau------------                                      
 98-- Stuart-Walter----------------- 32 Albania------------------                                            
 99-- Brody-Velasquez--------------- 46 Mauritius----------------
-
+100- Alan-------------------------- 20 Honduras----------------- 
+101- Denisse----------------------- 20 Honduras----------------- 

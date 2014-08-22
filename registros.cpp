@@ -176,6 +176,7 @@ void registros::on_boton_agregar_campo_clicked()
             ui->lesllave_registros->setText("Si");
         else
             ui->lesllave_registros->setText("No");
+        ui->lentradacampo_registros->setText("");
         QString mask;
         if(camposa[num].getTipo()=="Entero"){
            for(int i=0;i<camposa[num].getTamano();i++)
@@ -188,6 +189,31 @@ void registros::on_boton_agregar_campo_clicked()
 
     }else{
         ui->lnumre_registros->setText(QString::number(ui->lnumre_registros->text().toInt()+1));
+        string registro;
+
+        for(int i=0;i<camposllenados.count();i++){
+           for(int o=0;o<camposllenados[i].length();o++){
+                if(camposllenados[i][o]==' ')
+                    camposllenados[i][o] = '-';
+            }
+
+           for(int b=camposllenados[i].length();b<camposa[i].getTamano();b++)
+               camposllenados[i]+= "-";
+
+           camposllenados[i]+=" ";
+           registro+= camposllenados[i].toStdString();
+
+        }
+        string nomarchivo =ui->comboarchivos_registros->currentText().toStdString();
+
+         char nom[30];
+         for(int i=0;i<nomarchivo.length();i++)
+             nom[i] = nomarchivo[i];
+         if(nomarchivo.length()<30)
+            nom[nomarchivo.length()] = '\0';
+        ofstream agregar(nom, fstream::app);
+        agregar<<registro<<endl;
+        agregar.close();
         ui->lnumcampo_registros->setText("1");
         ui->lnombrecampo_registros->setText(camposa[0].getNombre());
         ui->ltipocampo_registros->setText(camposa[0].getTipo());
