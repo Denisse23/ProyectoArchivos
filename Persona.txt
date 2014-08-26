@@ -1,3 +1,10 @@
+Identificador Entero 4----- Si---
+Nombre------- Char-- 30---- No---
+Edad--------- Entero 2----- No---
+Email-------- Char-- 50---- No---
+|
+-1
+$
 0    Georgia                        83 natoque.penatibus@felisadipiscingfringilla.
 1    Melinda                        53 Praesent@egestasAliquamfringilla.comngilla.
 2    Hedleya                        44 nec.ante@Curabitur.orgmfringilla.comngilla.
@@ -744,7 +751,7 @@
 743  Keelieusa                      18 ridiculus.mus@risusQuisque.co.ukdu.co.uklen
 744  Leigheusa                      70 ultrices@liberoProin.comue.co.ukdu.co.uklen
 745  Lisandraa                      20 adipiscing.ligula.Aenean@molestieorcitincid
-746  Jordanraa                      33 Aenean.egestas.hendrerit@lorem.comrcitincid
+746  Jordanraa                      33 Aenean.egestas.hendrerit@lorem.comrcitincid 
 747  Karennraa                      29 erat.Vivamus.nisi@sem.edulorem.comrcitincid
 748  Bellnnraa                      98 Vivamus.nisi.Mauris@utnulla.ca.comrcitincid
 749  Hermionea                      15 ultricies.sem.magna@ipsumsodales.netitincid
