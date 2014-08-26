@@ -1,7 +1,7 @@
-Identificador Entero 4----- Si---
-Nombre------- Char-- 30---- No---
-Edad--------- Entero 2----- No---
-Email-------- Char-- 50---- No---
+Identificador Entero 4 Sí
+Nombre Char 30 No
+Edad Entero 2 No
+Email Char 43 No
 |
 -1
 $
