@@ -69,10 +69,12 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
                 lla=true;
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
         }
-        ui->tablaregistros_listar->setColumnCount(camposa.count());
-
         for(int i=0;i<camposa.count();i++){
-
+            ui->tablaregistros_listar->insertColumn(i);
+            if(camposa[i].getNombre().length()>camposa[i].getTamano())
+                ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getNombre().length()*10);
+            else
+                ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getTamano()*10);
             ui->tablaregistros_listar->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
         }
 
