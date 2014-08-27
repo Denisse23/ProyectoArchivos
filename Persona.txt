@@ -1,9 +1,9 @@
-Identificador Entero 4 Sí
-Nombre Char 30 No
-Edad Entero 2 No
+Identificador Entero 5 Sí
+Nombre Char 31 No
+Edad Entero 3 No
 Email Char 43 No
 |
--1
+-1    
 $
 0    Georgia                        83 natoque.penatibus@felisadipiscingfringilla.
 1    Melinda                        53 Praesent@egestasAliquamfringilla.comngilla.
@@ -13,7 +13,7 @@ $
 5    Cruzltte                       65 nunc.sed@aneque.ca.orgmfringilla.comngilla.
 6    Pearltte                       57 commodo.hendrerit@necligulaconsectetuer.net
 7    Fletcher                       82 amet.massa@eros.canecligulaconsectetuer.net
-8    Delilahr                       62 a@convallis.co.ukanecligulaconsectetuer.net
+1000 Denisse                        20 denisse.suazo@unitec.edu                   
 9    Camdenhr                       80 et.rutrum.eu@quamvelsapien.co.ukctetuer.net
 10   Mailenhr                       59 Cras.vehicula@faucibusorciluctus.eduuer.net
 11   Irenenhr                       25 id.libero@vitaemaurissit.co.ukus.eduuer.net
@@ -104,7 +104,7 @@ $
 96   Mylesiner                      95 semper.Nam@utaliquam.co.ukus.edu.netmu.co.u
 97   Brettiner                      95 aliquet@Aliquamnecenim.netus.edu.netmu.co.u
 98   Iristiner                      33 aliquet.molestie@purus.comus.edu.netmu.co.u
-99   Mageeiner                      45 Proin@luctus.cae@purus.comus.edu.netmu.co.u
+1004 Luis                           50 luismoncada@gmail.com                      
 100  Idola                          8  nunc.ac.mattis@magna.edu                   
 101  Blaze                          72 risus.Nunc.ac@eleifendnon.com              
 102  Leigh                          10 ut.mi.Duis@mi.eduifendnon.com              
@@ -1005,3 +1005,5 @@ $
 997  Marisaude                      99 Phasellus.vitae.mauris@non.com@ategestasa.n
 998  Jessamine                      35 ultrices.iaculis@Duis.caon.com@ategestasa.n
 999  Kirestine                      52 aliquam.iaculis.lacus@nequevitae.caestasa.n
+1001 Ricardo                        21 ricardopaguada@hotmail.com                 
+1002 Daniela                        19 daniela@hotmail.com                        

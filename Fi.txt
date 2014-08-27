@@ -1,0 +1,14 @@
+Identificador Char 3 Sí
+Nombre Char 25 No
+|
+-1    
+$
+56 MariaLuisa               
+105Karina                   
+155Maria                    
+555David                    
+789Lola                     
+522Clarisa                  
+458Lola                     
+478Josue                    
+36 Martha                   
