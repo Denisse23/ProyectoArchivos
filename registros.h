@@ -9,6 +9,7 @@
 #include <fstream>
 #include <QList>
 #include "campos.h"
+
 using namespace std;
 
 namespace Ui {
@@ -25,6 +26,7 @@ public:
     explicit registros(QWidget *parent = 0);
     void Operate();
     void setFile(QString);
+    void llenarllaves();
     ~registros();
 
 private slots:
@@ -38,6 +40,10 @@ private:
     QList<QString> llaves;
     QList<campos> camposa;
     QList<QString> camposllenados;
+    int campollave;
+    int head;
+    int endoffsetestruc;
+    int offsethead;
     Ui::registros *ui;
 };
 

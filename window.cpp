@@ -28,3 +28,24 @@ void window::on_agregar_clicked()
     ventanaregistros.exec();
 
 }
+
+void window::on_listar_clicked()
+{
+    listar listaregistros(this);
+    listaregistros.setModal(true);
+    listaregistros.exec();
+}
+
+void window::on_pushButton_clicked()
+{
+    modificara modificararchivo(this);
+    modificararchivo.setModal(true);
+    modificararchivo.exec();
+}
+
+void window::on_borrar_clicked()
+{
+    borrar borrarregistros(this);
+    borrarregistros.setModal(true);
+    borrarregistros.exec();
+}

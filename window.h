@@ -4,8 +4,9 @@
 #include "registros.h"
 #include <QMainWindow>
 #include <QFileDialog>
-
-
+#include "listar.h"
+#include "modificara.h"
+#include "borrar.h"
 namespace Ui {
 class window;
 }
@@ -22,6 +23,12 @@ private slots:
     void on_nuevo_clicked();
 
     void on_agregar_clicked();
+
+    void on_listar_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_borrar_clicked();
 
 private:
     Ui::window *ui;

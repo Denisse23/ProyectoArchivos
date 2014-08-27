@@ -16,13 +16,22 @@ SOURCES += main.cpp\
         window.cpp \
     nuevo.cpp \
     campos.cpp \
-    registros.cpp
+    registros.cpp \
+    borrar.cpp \
+    listar.cpp \
+    modificara.cpp
 
 HEADERS  += window.h \
     nuevo.h \
     campos.h \
-    registros.h
+    registros.h \
+    borrar.h \
+    listar.h \
+    modificara.h
 
 FORMS    += window.ui \
     nuevo.ui \
-    registros.ui
+    registros.ui \
+    borrar.ui \
+    listar.ui \
+    modificara.ui

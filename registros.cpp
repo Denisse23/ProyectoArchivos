@@ -1,6 +1,14 @@
 #include "registros.h"
 #include "ui_registros.h"
 
+static void process_line(const QByteArray &)
+{
+}
+
+static void process_line(const QString &)
+{
+}
+
 registros::registros(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::registros)
@@ -14,6 +22,36 @@ registros::~registros()
     delete ui;
 }
 
+void registros::llenarllaves(){
+    int avance =0;
+    for(int l=0;l<campollave;l++){
+         avance+=camposa[l].getTamano();
+    }
+    if(campollave!=-1){
+    QFile file1 (ui->comboarchivos_registros->currentText());
+    if (!file1.open(QIODevice::ReadWrite | QIODevice::Text))
+            return;
+        QTextStream in1(&file1);
+        QString line1 = in1.readLine();
+        bool empezar = false;
+        while (!line1.isNull()) {
+            line1 = in1.readLine();
+            process_line(line1);
+            if(empezar){
+               if(line1[0]!='*'){
+                   llaves.append(line1.mid(avance,camposa[campollave].getTamano()));
+
+                }
+            }
+            if(line1=="$"){
+                empezar = true;
+
+            }
+    }
+        file1.close();
+  }
+}
+
 void registros::on_pushButton_clicked()
 {
     ui->lnumre_registros->setText("0");
@@ -24,7 +62,8 @@ void registros::on_pushButton_clicked()
     ui->ltamanocampo_registros->setText("");
     ui->lentradacampo_registros->setText("");
     ui->lesllave_registros->setText("");
-
+    head = 0;
+    endoffsetestruc=0;
     ifstream verificar("archivoscreados.txt");
     while(verificar.good()){
         string archivo;
@@ -47,195 +86,176 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
     ui->ltamanocampo_registros->setText("");
     ui->lentradacampo_registros->setText("");
     ui->lesllave_registros->setText("");
+    llaves.clear();
     camposa.clear();
     camposllenados.clear();
+    head = 0;
+    endoffsetestruc=0;
+    campollave = -1;
+    offsethead = 0;
+    QFile file (ui->comboarchivos_registros->currentText());
+    if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+            return;
+        QTextStream in(&file);
+        QString line = in.readLine();
+        QStringList divisiones = line.split(" ");
+        bool lla =false;
+        if(divisiones[3]=="Sí"){
 
-    string nomarchivo =ui->comboarchivos_registros->currentText().toStdString();
-
-     char nom[30];
-     for(int i=0;i<nomarchivo.length();i++)
-         nom[i] = nomarchivo[i];
-     if(nomarchivo.length()<30)
-        nom[nomarchivo.length()] = '\0';
-     int numcampollave=-1;
-     ifstream archivo(nom);
-     while(archivo.good()){
-         string nombre="";
-         string tipo="";
-         string tamano="";
-         string llave="";
-         archivo >>nombre>>tipo>>tamano>>llave;
-         if(nombre=="|")
-             break;
-         for (int u=0;u<nombre.length();u++){
-             if(nombre[u]=='-'){
-                 nombre[u]='\0';
-
-             }
-         }
-         for (int u=0;u<tipo.length();u++){
-             if(tipo[u]=='-'){
-                 tipo[u]='\0';
-
-             }
-         }
-         for (int u=0;u<tamano.length();u++){
-             if(tamano[u]=='-'){
-                 tamano[u]='\n';
-
-             }
-         }
-
-          bool lla = false;
-          if(llave=="Si---"){
-              lla=true;
-               numcampollave=camposa.count();
-          }
-          camposa.append(campos(QString::fromStdString(nombre),QString::fromStdString(tipo),QString::fromStdString(tamano).toInt(),lla));
-     }
-     archivo.close();
-     if(numcampollave!=-1){
-     ifstream archivo1(nom);
-     bool regis = false;
-     int cam = 0;
-     while(archivo1.good()){
-        if(cam==camposa.count())
-            cam=0;
-        string key;
-        archivo1>>key;
-        if(key[0]!='\0'){
-        if(key=="$" || regis){
-            if(regis){
-                if(key[0]!='[' && cam==0){
-                    for(int j=0;j<camposa[0].getTamano();j++){
-                        if(key[j]=='-')
-                            key[j]='\0';
-                    }
-                    llaves.append(QString::fromStdString(key));
-                    ui->comboarchivos_registros->addItem(llaves[llaves.count()-1]);
-
-                 }
-                cam++;
+            lla=true;
+            campollave = camposa.count();
+        }
+        endoffsetestruc+= line.length()+1;
+        camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
+        while (!line.isNull()) {
+            line = in.readLine();
+            process_line(line);
+            endoffsetestruc+= line.length()+1;
+           if(line=="|")
+                break;
+            QStringList divisiones = line.split(" ");
+            bool lla =false;
+            if(divisiones[3]=="Sí"){
+                lla=true;
+                campollave = camposa.count();
             }
-            regis = true;
+            camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-        }
-        }
+       }
+       offsethead = endoffsetestruc+1;
+       line = in.readLine();
+       endoffsetestruc+=line.length()+1;
+       head = line.toInt();
+       endoffsetestruc+=2;
+       ui->lnumcampo_registros->setText("1");
+       ui->lnombrecampo_registros->setText(camposa[0].getNombre());
+       ui->ltipocampo_registros->setText(camposa[0].getTipo());
+       ui->ltamanocampo_registros->setText(QString::number(camposa[0].getTamano()));
+       if(camposa[0].getEsLlave())
+           ui->lesllave_registros->setText("Sí");
+       else
+           ui->lesllave_registros->setText("No");
 
-    }
-
-     archivo1.close();
-
-     }
-
-     ui->lnumcampo_registros->setText("1");
-     ui->lnombrecampo_registros->setText(camposa[0].getNombre());
-     ui->ltipocampo_registros->setText(camposa[0].getTipo());
-     ui->ltamanocampo_registros->setText(QString::number(camposa[0].getTamano()));
-     if(camposa[0].getEsLlave())
-         ui->lesllave_registros->setText("Si");
-     else
-         ui->lesllave_registros->setText("No");
-     QString mask;
-     if(camposa[0].getTipo()=="Entero"){
-        for(int i=0;i<camposa[0].getTamano();i++)
-            mask+="0";
-     }else{
-        for(int i=0;i<camposa[0].getTamano();i++)
-            mask+="n";
-     }
-     ui->lentradacampo_registros->setInputMask(mask+"\0");
+       QString mask;
+           if(camposa[0].getTipo()=="Entero"){
+              for(int i=0;i<camposa[0].getTamano();i++)
+                  mask+="0";
+           }else{
+              for(int i=0;i<camposa[0].getTamano();i++)
+                  mask+="x";
+           }
+           ui->lentradacampo_registros->setInputMask(mask+"\0");
+          file.close();
+          llenarllaves();
 
 
 }
 
 void registros::on_boton_agregar_campo_clicked()
 {
-    int num = camposllenados.count();
-    if(ui->lentradacampo_registros->text()==""){}else{
-    bool entrar = true;
-    for(int i=0;i<llaves.count();i++){
 
-        if(llaves[i]==ui->lentradacampo_registros->text()){
-          entrar = false;
-           ui->comboarchivos_registros->addItem(llaves[i]);
-          break;
-        }
-    }
-    if(entrar){
-
-    camposllenados.append(ui->lentradacampo_registros->text());
-    num++;
-
-    if(num<camposa.count()){
-        ui->lnumcampo_registros->setText(QString::number(num+1));
-        ui->lnombrecampo_registros->setText(camposa[num].getNombre());
-        ui->ltipocampo_registros->setText(camposa[num].getTipo());
-        ui->ltamanocampo_registros->setText(QString::number(camposa[num].getTamano()));
-        if(camposa[num].getEsLlave())
-            ui->lesllave_registros->setText("Si");
-        else
-            ui->lesllave_registros->setText("No");
-        ui->lentradacampo_registros->setText("");
-        QString mask;
-        if(camposa[num].getTipo()=="Entero"){
-           for(int i=0;i<camposa[num].getTamano();i++)
-               mask+="0";
-        }else{
-           for(int i=0;i<camposa[num].getTamano();i++)
-               mask+="n";
-        }
-        ui->lentradacampo_registros->setInputMask(mask+"\0");
-
+    if((ui->lentradacampo_registros->text()=="" && ui->lesllave_registros->text()=="Sí" ) ){
+        ui->lbanuncios_registros->setText("Llenar campo");
     }else{
-        ui->lnumre_registros->setText(QString::number(ui->lnumre_registros->text().toInt()+1));
-        string registro;
+       ui->lbanuncios_registros->setText("");
+       bool disponible = true;
+       QString cam = ui->lentradacampo_registros->text();
+       for(int q=cam.length();q<camposa[ui->lnumcampo_registros->text().toInt()-1].getTamano();q++)
+              cam+=' ';
 
-        for(int i=0;i<camposllenados.count();i++){
-           for(int o=0;o<camposllenados[i].length();o++){
-                if(camposllenados[i][o]==' ')
-                    camposllenados[i][o] = '-';
+       if(ui->lesllave_registros->text()=="Sí"){
+          for(int comp=0;comp<llaves.count();comp++){
+            if(llaves[comp]==cam){
+                ui->lbanuncios_registros->setText("El registro ya existe");
+                disponible = false;
             }
-
-           for(int b=camposllenados[i].length();b<camposa[i].getTamano();b++)
-               camposllenados[i]+= "-";
-
-           camposllenados[i]+=" ";
-           registro+= camposllenados[i].toStdString();
-
         }
-        string nomarchivo =ui->comboarchivos_registros->currentText().toStdString();
+        }
+        if(disponible){
+           int nc = ui->lnumcampo_registros->text().toInt();
+           camposllenados.append(cam);
+           if(ui->lnumcampo_registros->text().toInt()<camposa.count()){
+            ui->lnumcampo_registros->setText(QString::number(nc+1));
+            }else{
+            ui->lnumcampo_registros->setText("1");
+            nc=0;
+            ui->lnumre_registros->setText(QString::number(ui->lnumre_registros->text().toInt()+1));
+            QString mandar;
+            for(int q=0;q<camposllenados.count();q++)
+                 mandar+=camposllenados[q];
+            mandar+='\n';
+            if(head==-1){
+             QFile file (ui->comboarchivos_registros->currentText());
+             file.open(QIODevice::Append |QIODevice::Text);
+                 QTextStream out(&file);
+                 out << mandar;
+            file.close();
+            }else{
 
-         char nom[30];
-         for(int i=0;i<nomarchivo.length();i++)
-             nom[i] = nomarchivo[i];
-         if(nomarchivo.length()<30)
-            nom[nomarchivo.length()] = '\0';
-        ofstream agregar(nom, fstream::app);
-        agregar<<registro<<endl;
-        agregar.close();
-        ui->lnumcampo_registros->setText("1");
-        ui->lnombrecampo_registros->setText(camposa[0].getNombre());
-        ui->ltipocampo_registros->setText(camposa[0].getTipo());
-        ui->ltamanocampo_registros->setText(QString::number(camposa[0].getTamano()));
-        if(camposa[0].getEsLlave())
-            ui->lesllave_registros->setText("Si");
-        else
-            ui->lesllave_registros->setText("No");
-        QString mask;
-        if(camposa[0].getTipo()=="Entero"){
-           for(int i=0;i<camposa[0].getTamano();i++)
-               mask+="0";
-        }else{
-           for(int i=0;i<camposa[0].getTamano();i++)
-               mask+="n";
-        }
-        ui->lentradacampo_registros->setInputMask(mask+"\0");
-        camposllenados.clear();
-    }
-    }
-    else{
-            ui->lentradacampo_registros->setText("");
-        }
+                int offsetin=0;
+                for(int i=0;i<camposa.count();i++){
+                    offsetin += camposa[i].getTamano();
+                }
+                offsetin++;
+                offsetin *= (head-1);
+                offsetin+=endoffsetestruc+1;
+
+                QFile file (ui->comboarchivos_registros->currentText());
+                    file.open(QIODevice::ReadWrite|QIODevice::Text);
+                    QTextStream in1(&file);
+                    QString line = in1.readLine();
+                    while (!line.isNull()) {
+                        line = in1.readLine();
+                        process_line(line);
+
+                    }
+                    file.seek(offsetin);
+                    line = in1.readLine();
+                    file.seek(offsetin);
+                    in1<<mandar;
+                    QStringList nuevohead = line.split("*");
+                    file.close();
+                    QFile file1 (ui->comboarchivos_registros->currentText());
+                        file1.open(QIODevice::ReadWrite|QIODevice::Text);
+                        QTextStream in2(&file1);
+                        QString line2 = in2.readLine();
+                        while (!line2.isNull()) {
+                            line2 = in2.readLine();
+                            process_line(line2);
+
+                        }
+                    head = nuevohead[1].toInt();
+                    file1.seek(offsethead);
+                    in2<<nuevohead[1];
+                    file1.close();
+
+
+
+
+            }
+             camposllenados.clear();
+             llaves.clear();
+             llenarllaves();
+
+           }
+           ui->lnombrecampo_registros->setText(camposa[nc].getNombre());
+           ui->ltipocampo_registros->setText(camposa[nc].getTipo());
+           ui->ltamanocampo_registros->setText(QString::number(camposa[nc].getTamano()));
+           if(camposa[nc].getEsLlave())
+               ui->lesllave_registros->setText("Sí");
+           else
+               ui->lesllave_registros->setText("No");
+           QString mask;
+           if(camposa[nc].getTipo()=="Entero"){
+            for(int i=0;i<camposa[nc].getTamano();i++)
+                mask+="0";
+           }else{
+
+            for(int i=0;i<camposa[nc].getTamano();i++)
+                mask+="x";
+           }
+           ui->lentradacampo_registros->setText("");
+           ui->lentradacampo_registros->setInputMask(mask+"\0");
+       }
     }
 }

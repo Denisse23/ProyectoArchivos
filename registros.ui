@@ -215,6 +215,19 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="lbanuncios_registros">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>306</y>
+     <width>191</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

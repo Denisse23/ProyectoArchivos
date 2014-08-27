@@ -20,8 +20,11 @@ void nuevo::on_bagregar_nuevo_clicked()
     QString tipo = ui->combotipo_nuevo->currentText();
     int tamano = ui->spintamano_nuevo->text().toInt();
     bool llave = false;
-    if(ui->combollave_nuevo->currentText()=="Si")
+    if(ui->combollave_nuevo->currentText()=="Sí"){
         llave = true;
+        ui->combollave_nuevo->setVisible(false);
+        ui->combollave_nuevo->removeItem(1);
+    }
 
     if(campo!=""){
     bool disponible = true;
@@ -44,8 +47,7 @@ void nuevo::on_bagregar_nuevo_clicked()
     }
     }
     ui->lnombrecampo_nuevo->setText("");
-    ui->combollave_nuevo->setVisible(false);
-    ui->combollave_nuevo->removeItem(1);
+
 
 }
 
@@ -65,14 +67,12 @@ void nuevo::on_bcrear_nuevo_clicked()
         }
         verificar.close();
         if(esta ==false){
-
-
-        char nombrea[30];
-        int lennom = nombrearchivo.length();
-        for(int i=0;i<lennom;i++)
-            nombrea[i] = nombrearchivo[i];
-        if(lennom<30)
-            nombrea[lennom]='\0';
+            char nombrea[30];
+            int lennom = nombrearchivo.length();
+            for(int i=0;i<lennom;i++)
+                nombrea[i] = nombrearchivo[i];
+            if(lennom<30)
+             nombrea[lennom]='\0';
         //agregar el nombre del archivo a "archivoscreados"
         ofstream inscribir("archivoscreados.txt", fstream::app);
         inscribir<<nombrea<<endl;
@@ -80,35 +80,18 @@ void nuevo::on_bcrear_nuevo_clicked()
         //limpiar campos
         ui->lnombrearchivo_nuevo->setText("");
         //Crear archivo
-        int maxlnombre = 0;
-        foreach (campos k, listacampos){
-            if(k.getNombre().length()>maxlnombre)
-                maxlnombre = k.getNombre().length();
-        }
-        if(maxlnombre<6)
-            maxlnombre =6;
+
         QString mandar;
         foreach (campos k, listacampos){
-            mandar += k.getNombre();
-            for(int i=0; i<=(maxlnombre-k.getNombre().length())-1;i++)
-                mandar+="-";
-            mandar+=" ";
-            if(k.getTipo()=="Entero")
-                 mandar+=k.getTipo()+" ";
-            else
-                mandar+=k.getTipo()+"-- ";
-            if(k.getTamano()<10)
-                mandar+=QString::number(k.getTamano())+"----- ";
-            else
-                mandar+=QString::number(k.getTamano())+"---- ";
+            mandar += k.getNombre()+" "+k.getTipo()+" "+QString::number(k.getTamano())+" ";
             if(k.getEsLlave())
-                mandar+="Si---\n";
+                mandar+="Sí\n";
             else
-                mandar+="No---\n";
+                mandar+="No\n";
 
        }
        mandar+="|\n";
-       mandar+="-1\n";
+       mandar+="-1    \n";
        mandar+="$\n";
        ofstream file(nombrea);
        file<<mandar.toStdString()<<endl;
@@ -121,6 +104,10 @@ void nuevo::on_bcrear_nuevo_clicked()
             ui->tablacampos_nuevo->removeRow(0);
             listacampos.removeAt(0);
          }
+        if(ui->combollave_nuevo->isVisible()==false){
+        ui->combollave_nuevo->setVisible(true);
+        ui->combollave_nuevo->addItem("Sí");
+        }
         }else{
             ui->lnombrearchivo_nuevo->setText("El nombre ya exista, escoga otro");
         }
@@ -133,5 +120,6 @@ void nuevo::on_bcrear_nuevo_clicked()
         else
             ui->lnombrearchivo_nuevo->setText("Ingrese un nombre de archivo");
     }
+
 
 }
