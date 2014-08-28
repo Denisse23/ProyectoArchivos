@@ -94,7 +94,7 @@ void nuevo::on_bcrear_nuevo_clicked()
        mandar+="-1    \n";
        mandar+="$\n";
        ofstream file(nombrea);
-       file<<mandar.toStdString()<<endl;
+       file<<mandar.toStdString();
        file.close();
 
 
