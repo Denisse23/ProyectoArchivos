@@ -49,3 +49,17 @@ void window::on_borrar_clicked()
     borrarregistros.setModal(true);
     borrarregistros.exec();
 }
+
+void window::on_buscar_clicked()
+{
+    buscar buscarregistros(this);
+    buscarregistros.setModal(true);
+    buscarregistros.exec();
+}
+
+void window::on_pushButton_2_clicked()
+{
+    compactar compactararchivo(this);
+    compactararchivo.setModal(true);
+    compactararchivo.exec();
+}

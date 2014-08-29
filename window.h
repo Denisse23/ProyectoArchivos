@@ -7,6 +7,8 @@
 #include "listar.h"
 #include "modificara.h"
 #include "borrar.h"
+#include "buscar.h"
+#include "compactar.h"
 namespace Ui {
 class window;
 }
@@ -29,6 +31,10 @@ private slots:
     void on_pushButton_clicked();
 
     void on_borrar_clicked();
+
+    void on_buscar_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
     Ui::window *ui;

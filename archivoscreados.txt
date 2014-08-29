@@ -1,2 +1,3 @@
 Persona.txt
 Fi.txt
+Clases.txt

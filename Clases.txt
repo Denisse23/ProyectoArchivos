@@ -1,0 +1,6 @@
+Nombre Char 20 No
+sec Entero 3 Sí
+Hora Char 5 No
+|
+-1    
+$

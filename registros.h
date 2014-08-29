@@ -25,7 +25,6 @@ public:
     QFile mainfile;
     explicit registros(QWidget *parent = 0);
     void Operate();
-    void setFile(QString);
     void llenarllaves();
     ~registros();
 

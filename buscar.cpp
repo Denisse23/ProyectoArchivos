@@ -21,6 +21,11 @@ void buscar::on_pushButton_clicked()
 
 
     ui->comboarchivos_buscar->clear();
+    for(int y=0;y<ui->tablaBusqueda->rowCount();y++)
+        ui->tablaBusqueda->removeRow(0);
+    for(int y=0;y<ui->tablaBusqueda->columnCount();y++)
+        ui->tablaBusqueda->removeColumn(0);
+
     QFile file("archivoscreados.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
            QTextStream in(&file);
@@ -109,6 +114,7 @@ cont++;
 void buscar::on_comboarchivos_buscar_activated(const QString &arg1)
 {
 
+    ui->combo_estructura->clear();
 
 
     QString selected=ui->comboarchivos_buscar->currentText();
