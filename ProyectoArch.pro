@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     registros.cpp \
     borrar.cpp \
     listar.cpp \
-    modificara.cpp
+    modificara.cpp \
+    buscar.cpp
 
 HEADERS  += window.h \
     nuevo.h \
@@ -27,11 +28,13 @@ HEADERS  += window.h \
     registros.h \
     borrar.h \
     listar.h \
-    modificara.h
+    modificara.h \
+    buscar.h
 
 FORMS    += window.ui \
     nuevo.ui \
     registros.ui \
     borrar.ui \
     listar.ui \
-    modificara.ui
+    modificara.ui \
+    buscar.ui
