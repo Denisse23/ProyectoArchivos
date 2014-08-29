@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     borrar.cpp \
     listar.cpp \
     modificara.cpp \
-    buscar.cpp
+    buscar.cpp \
+    compactar.cpp
 
 HEADERS  += window.h \
     nuevo.h \
@@ -29,7 +30,8 @@ HEADERS  += window.h \
     borrar.h \
     listar.h \
     modificara.h \
-    buscar.h
+    buscar.h \
+    compactar.h
 
 FORMS    += window.ui \
     nuevo.ui \
@@ -37,4 +39,5 @@ FORMS    += window.ui \
     borrar.ui \
     listar.ui \
     modificara.ui \
-    buscar.ui
+    buscar.ui \
+    compactar.ui
