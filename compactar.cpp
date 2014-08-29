@@ -48,10 +48,11 @@ void compactar::on_pushButton_2_clicked()
 
             while (!in.atEnd()) {
                linea=in.readLine();
-               if(linea.contains("*")&&bandera==false){
+              //linea[0]=="Ø";
+               if(linea[0]=='*'&&bandera==false){
                    bandera=true;
                }//fin del if
-                if(linea.contains("*")==false){
+                if((linea[0]!='*')){
                             out<<linea+"\n";
                 }//fin del if
             }//fin del while
