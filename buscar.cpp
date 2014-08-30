@@ -42,7 +42,9 @@ void buscar::on_pushButton_clicked()
 void buscar::on_pushButton_2_clicked()
 {
 
-    ui->tablaBusqueda->reset();
+    ui->tablaBusqueda->setRowCount(0);
+
+    ui->tablaBusqueda->setColumnCount(0);
 
     QString linea;
     QStringList data;
@@ -115,6 +117,10 @@ void buscar::on_comboarchivos_buscar_activated(const QString &arg1)
 {
 
     ui->combo_estructura->clear();
+
+    ui->tablaBusqueda->setRowCount(0);
+
+    ui->tablaBusqueda->setColumnCount(0);
 
 
     QString selected=ui->comboarchivos_buscar->currentText();
