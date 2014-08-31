@@ -20,7 +20,6 @@ public:
 private slots:
     void on_pushButton_clicked();
 
-    void on_combo_compactar_activated(const QString &arg1);
 
     void on_pushButton_2_clicked();
 

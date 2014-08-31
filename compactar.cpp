@@ -29,43 +29,52 @@ void compactar::on_pushButton_clicked()
 }//fin del if
 }//fin del metodo
 
-void compactar::on_combo_compactar_activated(const QString &arg1)
-{
 
-}
 
 void compactar::on_pushButton_2_clicked()
 {
+
         QString linea="";
         QFile tmp("temporal.txt");
         tmp.open(QIODevice::ReadWrite | QIODevice::Text);
         QTextStream out(&tmp);
         QString selected=ui->combo_compactar->currentText();
         QFile file(selected);
-        bool bandera=false;
+        bool banderahead = false;
+        bool bandera = true;
         if (file.open(QIODevice::ReadWrite | QIODevice::Text)){
                QTextStream in(&file);
 
             while (!in.atEnd()) {
                linea=in.readLine();
-              //linea[0]=="Ø";
-               if(linea[0]=='*'&&bandera==false){
-                   bandera=true;
+               if(linea[0]!='*'){
+                   if(banderahead){
+                       if(linea!="-1    "){
+                         out<<"-1    \n";
+                         banderahead=false;
+                       }else{
+                         bandera = false;
+                         break;
+                       }
+                   }else{
+                      out<<linea+"\n";
+                    }
                }//fin del if
-                if((linea[0]!='*')){
-                            out<<linea+"\n";
+
+               if( linea=="|"){
+                      banderahead = true;
                 }//fin del if
             }//fin del while
-                if(bandera){
+                  if(bandera){
                     file.remove();
                     tmp.rename(selected);
                     tmp.close();
-                }//fin del if
-                else{
+                   }else{
                     tmp.close();
                     tmp.remove();
-                }//fin del else
+                   }
 
         }//fin del if
+        ui->combo_compactar->clear();
 }
 

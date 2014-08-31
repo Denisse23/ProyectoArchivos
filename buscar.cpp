@@ -25,16 +25,43 @@ void buscar::on_pushButton_clicked()
         ui->tablaBusqueda->removeRow(0);
     for(int y=0;y<ui->tablaBusqueda->columnCount();y++)
         ui->tablaBusqueda->removeColumn(0);
-
+    QList<QString> archivos;
     QFile file("archivoscreados.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)){
            QTextStream in(&file);
         while (!in.atEnd()) {
         QString archivo;
         archivo=in.readLine();
-        ui->comboarchivos_buscar->addItem((archivo));
+        archivos.append(archivo);
     }//fin del while
 }//fin del if
+    //solo cargara archivos con
+    for(int i=0;i<archivos.count();i++){
+        QFile file (archivos[i]);
+        if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
+            return;
+        QTextStream in(&file);
+        QString line = in.readLine();
+        int mas = 0;
+        bool activar = false;
+        while (!line.isNull()) {
+            line = in.readLine();
+            if(mas==1){
+                mas++;
+                break;
+             }
+            if(activar)
+                if(line!="\n")
+                  mas++;
+             if(line=="$")
+                activar = true;
+          }
+
+        if(mas==2){
+          ui->comboarchivos_buscar->addItem(archivos[i]);
+        }
+        file.close();
+      }
 }
 
 

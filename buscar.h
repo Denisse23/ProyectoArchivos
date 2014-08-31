@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QStringRef>
+#include <QList>
 
 namespace Ui {
 class buscar;

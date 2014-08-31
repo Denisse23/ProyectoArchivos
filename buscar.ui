@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Cargar Archivo</string>
+    <string>Cargar Archivo(con registros)</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_2">
