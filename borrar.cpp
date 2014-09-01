@@ -12,9 +12,76 @@ borrar::~borrar()
 {
     delete ui;
 }
+void borrar::borrarregistros(QList<int> RRNP){
+    char conectar[RRNP.count()+1][2];
+        for(int i=0;i<RRNP.count()+1;i++){
+            if(i==0){
+             conectar[i][0]=ultimocampoborrado;
+             conectar[i][1]=RRNP[i];
+            }else if(i==RRNP.count()){
+             conectar[i][0]=RRNP[i-1];
+             conectar[i][1]=-1;
+            }else{
+             conectar[i][0]=RRNP[i-1];
+             conectar[i][1]=RRNP[i];
+           }
+       }
+
+    if(RRNP.count()>0){
+       for(int i=0;i<RRNP.count()+1;i++){
+        QFile file (ui->comboarchivos_borrar->currentText());
+            file.open(QIODevice::ReadWrite|QIODevice::Text);
+            QTextStream in(&file);
+            QString line;
+            int offset = 0;
+            int conR =0;
+            bool leer = false;
+            bool head = false;
+            while (!in.atEnd()) {
+                line = in.readLine();
+                if(head){
+                    if(conectar[i][0]==-1){
+                        for(int k=0;k<6;k++){
+                            if(k<QString::number(conectar[i][1]).length()){
+                                line[k]= QString::number(conectar[i][1])[k];
+                             }else{
+                                line[k]=' ';
+                             }
+                        }
+                        file.seek(offset+1);
+                        in<<line<<endl;
+                        break;
+                    }
+                    head = false;
+                }
+                if(leer){
+                   conR++;
+                  if(conR==conectar[i][0]){
+                      line[0]='*';
+                     for(int k=0;k<QString::number(conectar[i][1]).length();k++){
+                        line[k+1]= QString::number(conectar[i][1])[k];
+                     }
+                     line[QString::number(conectar[i][1]).length()+1]='*';
+                     file.seek(offset+1);
+                     in<<line<<endl;
+                     break;
+                 }
+                }
+                 if(line=="$")
+                     leer = true;
+                 if(line=="|")
+                     head = true;
+                 offset+= line.length()+1;
+             }
+        file.close();
+        }
+
+    }
+}
 
 void borrar::on_pushButton_clicked()
 {
+    RRN.clear();
     ultimocampoborrado=-1;
     ui->comboregistros_borrar->clear();
     ui->lbusqueda_borrar->setText("");
@@ -66,6 +133,7 @@ void borrar::on_pushButton_clicked()
 
 void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 {
+    RRN.clear();
     ultimocampoborrado=-1;
     ui->comboregistros_borrar->clear();
     ui->lbusqueda_borrar->setText("");
@@ -75,7 +143,7 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
         ui->tabla_borrar->removeColumn(i);
     ui->combocampos_borrar->clear();
     camposa.clear();
-    QFile file (ui->comboarchivos_borrar->currentText());
+    QFile file (arg1);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
@@ -105,7 +173,8 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 
 void borrar::on_pushButton_2_clicked()
 {
-
+    RRN.clear();
+    ultimocampoborrado=-1;
     ui->comboregistros_borrar->clear();
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
@@ -145,6 +214,7 @@ void borrar::on_pushButton_2_clicked()
                    contadorRRN++;
                    particion =linea.mid(sumatamanos,camposa[ui->combocampos_borrar->currentIndex()].getTamano()).toLower();
                    if(linea[0]!='*' && particion.contains(ui->lbusqueda_borrar->text().toLower())){
+                       RRN.append(contadorRRN);
                        int rowc = ui->tabla_borrar->rowCount();
                        int camino=0;
                        ui->tabla_borrar->insertRow(rowc);
@@ -155,10 +225,10 @@ void borrar::on_pushButton_2_clicked()
 
 
                    }else if(linea[0]=='*' && buscarborrados){
-                      if(linea[1]=='-' && linea[2]=='-1'){
+                      if(linea[1]=='-' && linea[2]=='1'){
                           ultimocampoborrado=contadorRRN;
                           buscarborrados=false;
-                      }
+                     }
                    }
                }
                if(linea=="$")
@@ -177,6 +247,7 @@ void borrar::on_pushButton_2_clicked()
 
 void borrar::on_combocampos_borrar_activated(const QString &arg1)
 {
+    RRN.clear();
     ui->comboregistros_borrar->clear();
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
@@ -187,19 +258,43 @@ void borrar::on_combocampos_borrar_activated(const QString &arg1)
 
 void borrar::on_pushButton_3_clicked()
 {
-
-    ui->comboregistros_borrar->addItem(QString::number(ui->tabla_borrar->currentRow()+17));
+    bool repetido = false;
+    for(int i=0;i<ui->comboregistros_borrar->count();i++){
+        if(ui->comboregistros_borrar->itemText(i).toInt()==ui->tabla_borrar->currentRow()+1){
+            repetido=true;
+            break;
+        }
+    }
+    if(repetido==false)
+         ui->comboregistros_borrar->addItem(QString::number(ui->tabla_borrar->currentRow()+1));
 
 }
 
 void borrar::on_pushButton_4_clicked()
 {
     ui->comboregistros_borrar->clear();
+
 }
 
 void borrar::on_pushButton_5_clicked()
 {
+    borrarregistros(RRN);
+    ui->lbusqueda_borrar->setText("");
+    ui->comboregistros_borrar->clear();
+    for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
+        ui->tabla_borrar->removeRow(i);
+    for(int i=ui->tabla_borrar->columnCount()-1;i>-1;i--)
+        ui->tabla_borrar->removeColumn(i);
+}
 
+void borrar::on_pushButton_6_clicked()
+{
+    QList<int> RRN2;
+
+    for(int i=0;i<ui->comboregistros_borrar->count();i++){
+        RRN2.append(RRN[ui->comboregistros_borrar->itemText(i).toInt()-1]);
+    }
+    borrarregistros(RRN2);
     ui->lbusqueda_borrar->setText("");
     ui->comboregistros_borrar->clear();
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)

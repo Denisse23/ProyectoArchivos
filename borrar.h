@@ -40,8 +40,12 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_pushButton_6_clicked();
+
 private:
+    void borrarregistros(QList<int>);
     QList<campos> camposa;
+    QList<int> RRN;
     int ultimocampoborrado;
     Ui::borrar *ui;
 };
