@@ -15,6 +15,8 @@ borrar::~borrar()
 
 void borrar::on_pushButton_clicked()
 {
+    ultimocampoborrado=-1;
+    ui->comboregistros_borrar->clear();
     ui->lbusqueda_borrar->setText("");
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
@@ -64,6 +66,8 @@ void borrar::on_pushButton_clicked()
 
 void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 {
+    ultimocampoborrado=-1;
+    ui->comboregistros_borrar->clear();
     ui->lbusqueda_borrar->setText("");
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
@@ -102,6 +106,7 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 void borrar::on_pushButton_2_clicked()
 {
 
+    ui->comboregistros_borrar->clear();
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
     for(int i=ui->tabla_borrar->columnCount()-1;i>-1;i--)
@@ -126,11 +131,20 @@ void borrar::on_pushButton_2_clicked()
                QString linea;
                QString particion;
                bool iniciore =false;
+               bool saberllave = false;
+               bool buscarborrados = false;
+               int contadorRRN = 0;
              while (!in.atEnd()) {
                linea=in.readLine();
+               if(saberllave){
+                   saberllave = false;
+                   if(linea!="-1    ")
+                       buscarborrados=true;
+               }
                if(iniciore){
-                   particion =linea.mid(sumatamanos,camposa[ui->combocampos_borrar->currentIndex()].getTamano());
-                   if(linea[0]!='*' && particion.contains(ui->lbusqueda_borrar->text())){
+                   contadorRRN++;
+                   particion =linea.mid(sumatamanos,camposa[ui->combocampos_borrar->currentIndex()].getTamano()).toLower();
+                   if(linea[0]!='*' && particion.contains(ui->lbusqueda_borrar->text().toLower())){
                        int rowc = ui->tabla_borrar->rowCount();
                        int camino=0;
                        ui->tabla_borrar->insertRow(rowc);
@@ -139,11 +153,18 @@ void borrar::on_pushButton_2_clicked()
                            camino+=camposa[o].getTamano();
                        }
 
-//
-                    }
+
+                   }else if(linea[0]=='*' && buscarborrados){
+                      if(linea[1]=='-' && linea[2]=='-1'){
+                          ultimocampoborrado=contadorRRN;
+                          buscarborrados=false;
+                      }
+                   }
                }
                if(linea=="$")
                    iniciore = true;
+               if(linea=="|")
+                   saberllave=true;
              }//fin while
          }//fin if abrir archivo
          if(ui->tabla_borrar->rowCount()==0){
@@ -151,13 +172,38 @@ void borrar::on_pushButton_2_clicked()
              ui->tabla_borrar->setItem(0,0,new QTableWidgetItem("No se encontro"));
           }
     }//fin if principal
+
 }
 
 void borrar::on_combocampos_borrar_activated(const QString &arg1)
 {
+    ui->comboregistros_borrar->clear();
     for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
         ui->tabla_borrar->removeRow(i);
     for(int i=ui->tabla_borrar->columnCount()-1;i>-1;i--)
         ui->tabla_borrar->removeColumn(i);
     ui->lbusqueda_borrar->setText("");
+}
+
+void borrar::on_pushButton_3_clicked()
+{
+
+    ui->comboregistros_borrar->addItem(QString::number(ui->tabla_borrar->currentRow()+17));
+
+}
+
+void borrar::on_pushButton_4_clicked()
+{
+    ui->comboregistros_borrar->clear();
+}
+
+void borrar::on_pushButton_5_clicked()
+{
+
+    ui->lbusqueda_borrar->setText("");
+    ui->comboregistros_borrar->clear();
+    for(int i=ui->tabla_borrar->rowCount()-1;i>-1;i--)
+        ui->tabla_borrar->removeRow(i);
+    for(int i=ui->tabla_borrar->columnCount()-1;i>-1;i--)
+        ui->tabla_borrar->removeColumn(i);
 }

@@ -12,6 +12,7 @@
 #include <QTextStream>
 #include <QStringRef>
 #include <QList>
+#include "campos.h"
 
 namespace Ui {
 class buscar;
@@ -34,7 +35,10 @@ private slots:
 
     void on_comboarchivos_buscar_activated(const QString &arg1);
 
+    void on_combo_estructura_activated(const QString &arg1);
+
 private:
+    QList<campos> camposa;
     Ui::buscar *ui;
 
 };

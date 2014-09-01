@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
+    <width>670</width>
     <height>470</height>
    </rect>
   </property>
@@ -16,7 +16,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>190</x>
      <y>10</y>
      <width>241</width>
      <height>31</height>
@@ -29,8 +29,8 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>220</y>
+     <x>530</x>
+     <y>170</y>
      <width>111</width>
      <height>31</height>
     </rect>
@@ -42,17 +42,17 @@
   <widget class="QTableWidget" name="tablaBusqueda">
    <property name="geometry">
     <rect>
-     <x>35</x>
-     <y>260</y>
-     <width>551</width>
-     <height>192</height>
+     <x>15</x>
+     <y>221</y>
+     <width>631</width>
+     <height>231</height>
     </rect>
    </property>
   </widget>
   <widget class="QComboBox" name="comboarchivos_buscar">
    <property name="geometry">
     <rect>
-     <x>120</x>
+     <x>160</x>
      <y>60</y>
      <width>321</width>
      <height>31</height>
@@ -62,7 +62,7 @@
   <widget class="QLineEdit" name="termino">
    <property name="geometry">
     <rect>
-     <x>330</x>
+     <x>260</x>
      <y>170</y>
      <width>261</width>
      <height>31</height>
@@ -74,20 +74,20 @@
     <rect>
      <x>20</x>
      <y>170</y>
-     <width>301</width>
+     <width>191</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ingrese el termino de busqueda&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Ingrese la busqueda:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QComboBox" name="combo_estructura">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>260</x>
      <y>120</y>
-     <width>281</width>
+     <width>261</width>
      <height>31</height>
     </rect>
    </property>
@@ -95,14 +95,14 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>30</x>
      <y>120</y>
      <width>191</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escoja un estrucutura:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Escoja un campo:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
  </widget>

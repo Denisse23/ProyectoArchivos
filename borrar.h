@@ -34,8 +34,15 @@ private slots:
 
     void on_combocampos_borrar_activated(const QString &arg1);
 
+    void on_pushButton_3_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
 private:
     QList<campos> camposa;
+    int ultimocampoborrado;
     Ui::borrar *ui;
 };
 
