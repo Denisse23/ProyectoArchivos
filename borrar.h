@@ -3,6 +3,14 @@
 
 #include <QDialog>
 
+#include <QDialog>
+#include <QString>
+#include <QTextStream>
+#include <QStringList>
+#include <QFile>
+#include <fstream>
+#include <QList>
+#include "campos.h"
 namespace Ui {
 class borrar;
 }
@@ -15,7 +23,19 @@ public:
     explicit borrar(QWidget *parent = 0);
     ~borrar();
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_comboarchivos_borrar_activated(const QString &arg1);
+
+
+    void on_pushButton_2_clicked();
+
+
+    void on_combocampos_borrar_activated(const QString &arg1);
+
 private:
+    QList<campos> camposa;
     Ui::borrar *ui;
 };
 
