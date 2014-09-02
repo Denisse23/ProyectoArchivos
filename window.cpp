@@ -63,3 +63,10 @@ void window::on_pushButton_2_clicked()
     compactararchivo.setModal(true);
     compactararchivo.exec();
 }
+
+void window::on_pushButton_3_clicked()
+{
+    ver verarchivo(this);
+    verarchivo.setModal(true);
+    verarchivo.exec();
+}
