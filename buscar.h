@@ -38,6 +38,7 @@ private slots:
     void on_combo_estructura_activated(const QString &arg1);
 
 private:
+    QFile file;
     QList<campos> camposa;
     Ui::buscar *ui;
 

@@ -79,6 +79,7 @@ void registros::on_pushButton_clicked()
 
 void registros::on_comboarchivos_registros_activated(const QString &arg1)
 {
+    file.close();
     ui->lnumre_registros->setText("0");
     ui->lnombrecampo_registros->setText("");
     ui->lnumcampo_registros->setText("");
@@ -93,7 +94,7 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
     endoffsetestruc=0;
     campollave = -1;
     offsethead = 0;
-    QFile file (ui->comboarchivos_registros->currentText());
+    file.setFileName(ui->comboarchivos_registros->currentText());
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
@@ -140,12 +141,12 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
            if(camposa[0].getTipo()=="Entero"){
               for(int i=0;i<camposa[0].getTamano();i++)
                   mask+="0";
+              ui->lentradacampo_registros->setInputMask(mask+"\0");
            }else{
-              for(int i=0;i<camposa[0].getTamano();i++)
-                  mask+="x";
+               ui->lentradacampo_registros->setInputMask("");
+               ui->lentradacampo_registros->setMaxLength(camposa[0].getTamano());
            }
-           ui->lentradacampo_registros->setInputMask(mask+"\0");
-          file.close();
+
           llenarllaves();
 
 
@@ -185,13 +186,11 @@ void registros::on_boton_agregar_campo_clicked()
                  mandar+=camposllenados[q];
             mandar+='\n';
             if(head==-1){
-             QFile file (ui->comboarchivos_registros->currentText());
-             file.open(QIODevice::Append |QIODevice::Text);
                  QTextStream out(&file);
+                 file.seek(file.size());
                  out << mandar;
-            file.close();
+                 out.flush();
             }else{
-
                 int offsetin=0;
                 for(int i=0;i<camposa.count();i++){
                     offsetin += camposa[i].getTamano();
@@ -199,40 +198,23 @@ void registros::on_boton_agregar_campo_clicked()
                 offsetin++;
                 offsetin *= (head-1);
                 offsetin+=endoffsetestruc+1;
+                      ////////////Escribir en archivo
 
-                QFile file (ui->comboarchivos_registros->currentText());
-                    file.open(QIODevice::ReadWrite|QIODevice::Text);
                     QTextStream in1(&file);
-                    QString line = in1.readLine();
-                    while (!line.isNull()) {
-                        line = in1.readLine();
-                        process_line(line);
-
-                    }
+                    QString line ;
                     file.seek(offsetin);
                     line = in1.readLine();
                     file.seek(offsetin);
                     in1<<mandar;
+                    in1.flush();
                     QStringList nuevohead = line.split("*");
-                    file.close();
-                    QFile file1 (ui->comboarchivos_registros->currentText());
-                        file1.open(QIODevice::ReadWrite|QIODevice::Text);
-                        QTextStream in2(&file1);
-                        QString line2 = in2.readLine();
-                        while (!line2.isNull()) {
-                            line2 = in2.readLine();
-                            process_line(line2);
-
-                        }
                     head = nuevohead[1].toInt();
-                    file1.seek(offsethead);
-                    in2<<nuevohead[1];
-                    file1.close();
 
+                    file.seek(offsethead);
+                    in1<<nuevohead[1];
+                    in1.flush();
 
-
-
-            }
+           }
              camposllenados.clear();
              llaves.clear();
              llenarllaves();
@@ -246,16 +228,17 @@ void registros::on_boton_agregar_campo_clicked()
            else
                ui->lesllave_registros->setText("No");
            QString mask;
+            ui->lentradacampo_registros->setText("");
            if(camposa[nc].getTipo()=="Entero"){
             for(int i=0;i<camposa[nc].getTamano();i++)
                 mask+="0";
+                ui->lentradacampo_registros->setInputMask(mask+"\0");
            }else{
-
-            for(int i=0;i<camposa[nc].getTamano();i++)
-                mask+="x";
+                ui->lentradacampo_registros->setInputMask("");
+                ui->lentradacampo_registros->setMaxLength(camposa[nc].getTamano());
            }
-           ui->lentradacampo_registros->setText("");
-           ui->lentradacampo_registros->setInputMask(mask+"\0");
-       }
+
+
+         }
     }
 }

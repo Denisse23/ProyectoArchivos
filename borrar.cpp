@@ -29,8 +29,7 @@ void borrar::borrarregistros(QList<int> RRNP){
 
     if(RRNP.count()>0){
        for(int i=0;i<RRNP.count()+1;i++){
-        QFile file (ui->comboarchivos_borrar->currentText());
-            file.open(QIODevice::ReadWrite|QIODevice::Text);
+            file.seek(0);
             QTextStream in(&file);
             QString line;
             int offset = 0;
@@ -73,7 +72,7 @@ void borrar::borrarregistros(QList<int> RRNP){
                      head = true;
                  offset+= line.length()+1;
              }
-        file.close();
+
         }
 
     }
@@ -133,6 +132,7 @@ void borrar::on_pushButton_clicked()
 
 void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 {
+    file.close();
     RRN.clear();
     ultimocampoborrado=-1;
     ui->comboregistros_borrar->clear();
@@ -143,7 +143,7 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
         ui->tabla_borrar->removeColumn(i);
     ui->combocampos_borrar->clear();
     camposa.clear();
-    QFile file (arg1);
+    file.setFileName(arg1);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
@@ -186,16 +186,16 @@ void borrar::on_pushButton_2_clicked()
             if(camposa[i].getNombre().length()>camposa[i].getTamano())
                 ui->tabla_borrar->setColumnWidth(i,camposa[i].getNombre().length()*10);
             else
-                ui->tabla_borrar->setColumnWidth(i,camposa[i].getTamano()*10);
+                ui->tabla_borrar->setColumnWidth(i,camposa[i].getTamano()*20);
             ui->tabla_borrar->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
         }
 
-        QFile file(ui->comboarchivos_borrar->currentText());
+
         int sumatamanos =0;
         for(int i=0;i<ui->combocampos_borrar->currentIndex();i++){
             sumatamanos+= camposa[i].getTamano();
         }
-         if (file.open(QIODevice::ReadWrite | QIODevice::Text)){
+               file.seek(0);
                QTextStream in(&file);
                QString linea;
                QString particion;
@@ -236,7 +236,7 @@ void borrar::on_pushButton_2_clicked()
                if(linea=="|")
                    saberllave=true;
              }//fin while
-         }//fin if abrir archivo
+
          if(ui->tabla_borrar->rowCount()==0){
              ui->tabla_borrar->insertRow(0);
              ui->tabla_borrar->setItem(0,0,new QTableWidgetItem("No se encontro"));

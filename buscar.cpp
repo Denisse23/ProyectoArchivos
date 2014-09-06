@@ -81,16 +81,16 @@ void buscar::on_pushButton_2_clicked()
             if(camposa[i].getNombre().length()>camposa[i].getTamano())
                 ui->tablaBusqueda->setColumnWidth(i,camposa[i].getNombre().length()*10);
             else
-                ui->tablaBusqueda->setColumnWidth(i,camposa[i].getTamano()*10);
+                ui->tablaBusqueda->setColumnWidth(i,camposa[i].getTamano()*20);
             ui->tablaBusqueda->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
         }
 
-        QFile file(ui->comboarchivos_buscar->currentText());
+
         int sumatamanos =0;
         for(int i=0;i<ui->combo_estructura->currentIndex();i++){
             sumatamanos+= camposa[i].getTamano();
         }
-         if (file.open(QIODevice::ReadWrite | QIODevice::Text)){
+               file.seek(0);
                QTextStream in(&file);
                QString linea;
                QString particion;
@@ -113,7 +113,7 @@ void buscar::on_pushButton_2_clicked()
                if(linea=="$")
                    iniciore = true;
              }//fin while
-         }//fin if abrir archivo
+         //}//fin if abrir archivo
          if(ui->tablaBusqueda->rowCount()==0){
              ui->tablaBusqueda->insertRow(0);
              ui->tablaBusqueda->setItem(0,0,new QTableWidgetItem("No se encontro"));
@@ -125,7 +125,7 @@ void buscar::on_pushButton_2_clicked()
 
 void buscar::on_comboarchivos_buscar_activated(const QString &arg1)
 {
-
+    file.close();
     ui->combo_estructura->clear();
     ui->termino->setText("");
     for(int i=ui->tablaBusqueda->rowCount()-1;i>-1;i--)
@@ -134,7 +134,7 @@ void buscar::on_comboarchivos_buscar_activated(const QString &arg1)
         ui->tablaBusqueda->removeColumn(i);
 
     camposa.clear();
-    QFile file (ui->comboarchivos_buscar->currentText());
+    file.setFileName(ui->comboarchivos_buscar->currentText());
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);

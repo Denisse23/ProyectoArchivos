@@ -35,6 +35,8 @@ private slots:
 
     void on_boton_agregar_campo_clicked();
 
+
+
 private:
     QList<QString> llaves;
     QList<campos> camposa;
@@ -43,6 +45,7 @@ private:
     int head;
     int endoffsetestruc;
     int offsethead;
+    QFile file;
     Ui::registros *ui;
 };
 

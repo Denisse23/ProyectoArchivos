@@ -12,13 +12,6 @@ listar::~listar()
 {
     delete ui;
 }
-static void process_line(const QByteArray &)
-{
-}
-
-static void process_line(const QString &)
-{
-}
 
 void listar::on_pushButton_clicked()
 {
@@ -55,8 +48,7 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
         QString line;
         while (!in.atEnd()) {
             line = in.readLine();
-            process_line(line);
-           if(line=="|")
+            if(line=="|")
                 break;
             QStringList divisiones = line.split(" ");
             bool lla =false;
@@ -69,39 +61,32 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
             if(camposa[i].getNombre().length()>camposa[i].getTamano())
                 ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getNombre().length()*10);
             else
-                ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getTamano()*10);
+                ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getTamano()*20);
             ui->tablaregistros_listar->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
         }
 
-        QFile file1 (ui->comboarchivos_listar->currentText());
-        if (!file1.open(QIODevice::ReadWrite | QIODevice::Text))
-                return;
-            QTextStream in1(&file1);
-            QString line1;
             bool empezar = false;
-            while (!in1.atEnd()) {
-                line1 = in1.readLine();
-                process_line(line1);
+            while (!in.atEnd()) {
+                line = in.readLine();
                 if(empezar){
-                    if(line1[0]!='*'){
+                    if(line[0]!='*'){
                         int rowc = ui->tablaregistros_listar->rowCount();
                         int camino=0;
                         ui->tablaregistros_listar->insertRow(rowc);
                        for(int o=0;o<camposa.count();o++){
-                            ui->tablaregistros_listar->setItem(rowc,o,new QTableWidgetItem(line1.mid(camino,camposa[o].getTamano())));
+                            ui->tablaregistros_listar->setItem(rowc,o,new QTableWidgetItem(line.mid(camino,camposa[o].getTamano())));
                             camino+=camposa[o].getTamano();
                         }
 
 //
                      }
                 }
-                if(line1=="$")
+                if(line=="$")
                     empezar = true;
 
 
             }
-            if(ui->tablaregistros_listar->rowCount()>0)
-             ui->tablaregistros_listar->removeRow(ui->tablaregistros_listar->rowCount()-1);
 
-            file1.close();
+
+           file.close();
 }

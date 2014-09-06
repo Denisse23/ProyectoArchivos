@@ -47,6 +47,7 @@ private:
     QList<campos> camposa;
     QList<int> RRN;
     int ultimocampoborrado;
+    QFile file;
     Ui::borrar *ui;
 };
 

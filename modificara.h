@@ -42,7 +42,7 @@ private:
 
     QList<QString> archivos;
     QList<campos> camposa;
-
+    QFile file;
     Ui::modificara *ui;
 };
 

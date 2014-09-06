@@ -1,14 +1,14 @@
-Identificador Char 3 Sí
+Identificador Entero 3 Sí
 Nombre Char 25 No
 |
-8     
+-1    
 $
-899MariaLuisa               
-*-1*arlos                   
 333Maria                    
-777Gvid                     
-899Jared                    
-123Clarisa                  
+025Roberta                  
 412Pola                     
-*2*Josue                    
+789acacia                   
 222gartha                   
+785Marc                     
+563Mercedes                 
+456Jay z                    
+458Gloria                   

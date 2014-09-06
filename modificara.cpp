@@ -64,13 +64,14 @@ void modificara::on_bcargar_modificara_clicked()
 
 void modificara::on_comboarchivos_modificara_activated(const QString &arg1)
 {
+    file.close();
     ui->ltextos_modificar->setText("");
     for(int i=ui->combocampos_modificar->count()-1;i>=0;i--)
         ui->combocampos_modificar->removeItem(i);
 
         camposa.clear();
         ui->lnombrecampo_modificar->setText("");
-        QFile file (ui->comboarchivos_modificara->currentText());
+        file.setFileName(ui->comboarchivos_modificara->currentText());
         if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
@@ -129,12 +130,17 @@ void modificara::on_combocampos_modificar_activated(const QString &arg1)
               ui->combollave_modificar->setCurrentText("Sí");
           else
               ui->combollave_modificar->setCurrentText("No");
+    }else{
+        ui->lnombrecampo_modificar->setText("");
+        ui->spintamano_modificar->setValue(1);
+        ui->combollave_modificar->setCurrentIndex(0);
     }
 }
 
 void modificara::on_pushButton_2_clicked()
 {
     if(ui->combocampos_modificar->currentText()!="Nuevo"){
+       if(ui->lnombrecampo_modificar->text()!=""){
        int num = ui->combocampos_modificar->currentText().toInt();
        bool hay = false;
        if(ui->combollave_modificar->currentText()=="Sí"){
@@ -155,6 +161,9 @@ void modificara::on_pushButton_2_clicked()
            camposa[num-1].setEsLlave(true);
 
        }
+    }else{
+        ui->ltextos_modificar->setText("El campo necesita un nombre");
+    }
     }else{
         ui->ltextos_modificar->setText("Nuevo no es un campo");
     }
@@ -213,11 +222,11 @@ void modificara::on_pushButton_3_clicked()
    mandar+="|\n";
    mandar+="-1    \n";
    mandar+="$\n";
-   QFile file (ui->comboarchivos_modificara->currentText());
-   if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
-       return;
+
    QTextStream out(&file);
+   file.seek(0);
    out<<mandar;
+   file.resize(file.pos());
    file.close();
    ui->ltextos_modificar->setText("");
    ui->lnombrecampo_modificar->setText("");
