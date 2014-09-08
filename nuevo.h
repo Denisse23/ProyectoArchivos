@@ -7,6 +7,7 @@
 #include <fstream>
 #include <cstring>
 #include <iostream>
+#include <QFile>
 
 using namespace std;
 namespace Ui {
@@ -27,7 +28,7 @@ private slots:
     void on_bcrear_nuevo_clicked();
 
 private:
-    string nombrearchivo;
+
     QList<campos> listacampos;
     Ui::nuevo *ui;
 };

@@ -28,16 +28,13 @@ void registros::llenarllaves(){
          avance+=camposa[l].getTamano();
     }
     if(campollave!=-1){
-    QFile file1 (ui->comboarchivos_registros->currentText());
-    if (!file1.open(QIODevice::ReadWrite | QIODevice::Text))
-            return;
-        QTextStream in1(&file1);
+        file.seek(0);
+        QTextStream in1(&file);
         QString line1 = in1.readLine();
         bool empezar = false;
         while (!line1.isNull()) {
             line1 = in1.readLine();
-            process_line(line1);
-            if(empezar){
+              if(empezar){
                if(line1[0]!='*'){
                    llaves.append(line1.mid(avance,camposa[campollave].getTamano()));
 
@@ -48,7 +45,7 @@ void registros::llenarllaves(){
 
             }
     }
-        file1.close();
+
   }
 }
 
@@ -79,6 +76,7 @@ void registros::on_pushButton_clicked()
 
 void registros::on_comboarchivos_registros_activated(const QString &arg1)
 {
+    filei.close();
     file.close();
     ui->lnumre_registros->setText("0");
     ui->lnombrecampo_registros->setText("");
@@ -148,6 +146,12 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
            }
 
           llenarllaves();
+          QString nombreindice = ui->comboarchivos_registros->currentText();
+          nombreindice[nombreindice.length()-4] = 'l',nombreindice[nombreindice.length()-3] = 'i';
+          nombreindice[nombreindice.length()-2] = 'd',nombreindice[nombreindice.length()-1] = 'x';
+          filei.setFileName(nombreindice);
+              if (!filei.open(QIODevice::ReadWrite | QIODevice::Text))
+               return;
 
 
 }
@@ -185,17 +189,60 @@ void registros::on_boton_agregar_campo_clicked()
             for(int q=0;q<camposllenados.count();q++)
                  mandar+=camposllenados[q];
             mandar+='\n';
+            //Tamano registro;
+            int offsetin=0;
+            for(int i=0;i<camposa.count();i++){
+                offsetin += camposa[i].getTamano();
+            }
+            offsetin++;
+            //Ingresar indices//////////////////////////////////////
+            if(campollave!=-1){
+                int tamano = camposa[campollave].getTamano();
+                QList<indice> indices;
+
+                   filei.seek(0);
+                   QTextStream in2(&filei);
+                   int lugar =0;
+                   bool seguir = false;
+                   int contar =0;
+                   if(filei.size()>0){
+                   QString line;
+                   while(!in2.atEnd()){
+                     line =  in2.readLine();
+                     indices.append(indice(line.mid(0,tamano).toUpper(),line.mid(tamano,line.length())));
+                     if(camposllenados[campollave].toUpper()<indices[indices.count()-1].getLlave() && seguir ==false){
+                         lugar=contar;
+                         seguir = true;
+                     }
+                       contar++;
+                   }
+                   }
+                   if(seguir==false)
+                       lugar=indices.count();
+                   if(head!=-1){
+                      indices.insert(lugar,indice (camposllenados[campollave].toUpper(),QString::number(head)));
+                   }else{
+
+                      int R = (file.size()-endoffsetestruc+1)/offsetin+1;
+                      indices.insert(lugar,indice (camposllenados[campollave].toUpper(),QString::number(R)));
+                   }
+
+                   filei.seek(0);
+                   QString mandar1;
+                   for(int i=0;i<indices.count();i++){
+                       mandar1+=(indices[i].getLlave()+indices[i].getRRN())+'\n';
+                   }
+                  in2<<mandar1;
+
+            }
+            //////////////////////////////////////////////////////////////////
             if(head==-1){
                  QTextStream out(&file);
                  file.seek(file.size());
                  out << mandar;
                  out.flush();
             }else{
-                int offsetin=0;
-                for(int i=0;i<camposa.count();i++){
-                    offsetin += camposa[i].getTamano();
-                }
-                offsetin++;
+
                 offsetin *= (head-1);
                 offsetin+=endoffsetestruc+1;
                       ////////////Escribir en archivo
@@ -213,6 +260,7 @@ void registros::on_boton_agregar_campo_clicked()
                     file.seek(offsethead);
                     in1<<nuevohead[1];
                     in1.flush();
+
 
            }
              camposllenados.clear();

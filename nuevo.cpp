@@ -56,7 +56,8 @@ void nuevo::on_bcrear_nuevo_clicked()
 
     if(ui->lnombrearchivo_nuevo->text()!="" && ui->lnombrearchivo_nuevo->text()!="Ingrese un nombre de archivo" && listacampos.count()>0){
        //nombrando el archivo
-        nombrearchivo= (ui->lnombrearchivo_nuevo->text()+".txt").toStdString();
+        string nombrearchivo= (ui->lnombrearchivo_nuevo->text()+".data").toStdString();
+        string nombreindice = (ui->lnombrearchivo_nuevo->text()+".lidx").toStdString();
         ifstream verificar("archivoscreados.txt");
         bool esta = false;
         while(verificar.good()){
@@ -68,27 +69,38 @@ void nuevo::on_bcrear_nuevo_clicked()
         verificar.close();
         if(esta ==false){
             char nombrea[30];
+            char nombreai[30];
             int lennom = nombrearchivo.length();
             for(int i=0;i<lennom;i++)
                 nombrea[i] = nombrearchivo[i];
             if(lennom<30)
              nombrea[lennom]='\0';
+
+            lennom=nombreindice.length();
+            for(int i=0;i<lennom;i++)
+             nombreai[i]= nombreindice[i];
+             if(lennom<30)
+             nombreai[lennom]='\0';
+
         //agregar el nombre del archivo a "archivoscreados"
         ofstream inscribir("archivoscreados.txt", fstream::app);
         inscribir<<nombrea<<endl;
         inscribir.close();
+
         //limpiar campos
         ui->lnombrearchivo_nuevo->setText("");
         //Crear archivo
 
         QString mandar;
+        bool hayllave = false;
         foreach (campos k, listacampos){
             mandar += k.getNombre()+" "+k.getTipo()+" "+QString::number(k.getTamano())+" ";
-            if(k.getEsLlave())
+            if(k.getEsLlave()){
                 mandar+="Sí\n";
-            else
+                hayllave = true;
+            }else{
                 mandar+="No\n";
-
+            }
        }
        mandar+="|\n";
        mandar+="-1    \n";
@@ -96,8 +108,12 @@ void nuevo::on_bcrear_nuevo_clicked()
        ofstream file(nombrea);
        file<<mandar.toStdString();
        file.close();
-
-
+       if(hayllave){
+       //agregar el índice
+       QFile filei(QString::fromStdString(nombreai));
+       filei.open(QIODevice::ReadWrite | QIODevice::Text);
+       filei.close();
+       }
         //Borrar tabla
 
         foreach (campos k, listacampos){
