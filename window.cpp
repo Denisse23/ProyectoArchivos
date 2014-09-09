@@ -70,3 +70,10 @@ void window::on_pushButton_3_clicked()
     verarchivo.setModal(true);
     verarchivo.exec();
 }
+
+void window::on_pushButton_4_clicked()
+{
+    reindexar reindexararchivo(this);
+    reindexararchivo.setModal(true);
+    reindexararchivo.exec();
+}

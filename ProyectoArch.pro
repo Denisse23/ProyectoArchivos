@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     buscar.cpp \
     compactar.cpp \
     ver.cpp \
-    indice.cpp
+    indice.cpp \
+    reindexar.cpp
 
 HEADERS  += window.h \
     nuevo.h \
@@ -35,7 +36,8 @@ HEADERS  += window.h \
     buscar.h \
     compactar.h \
     ver.h \
-    indice.h
+    indice.h \
+    reindexar.h
 
 FORMS    += window.ui \
     nuevo.ui \
@@ -45,4 +47,5 @@ FORMS    += window.ui \
     modificara.ui \
     buscar.ui \
     compactar.ui \
-    ver.ui
+    ver.ui \
+    reindexar.ui
