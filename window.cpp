@@ -77,3 +77,10 @@ void window::on_pushButton_4_clicked()
     reindexararchivo.setModal(true);
     reindexararchivo.exec();
 }
+
+void window::on_pushButton_6_clicked()
+{
+    cruzar cruzararchivos(this);
+    cruzararchivos.setModal(true);
+    cruzararchivos.exec();
+}

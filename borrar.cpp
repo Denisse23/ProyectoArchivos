@@ -147,14 +147,8 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
-        QString line = in.readLine();
-        QStringList divisiones = line.split(" ");
-        bool lla =false;
-        if(divisiones[3]=="Sí"){
-             lla=true;
-        }
-        camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
-        while (!line.isNull()) {
+        QString line;
+        while (!in.atEnd()) {
             line = in.readLine();
             if(line=="|")
                 break;

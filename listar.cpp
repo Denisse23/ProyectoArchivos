@@ -29,7 +29,7 @@ void listar::on_pushButton_clicked()
         verificar >> archivo;
         ui->comboarchivos_listar->addItem(QString::fromStdString(archivo));
     }
-
+    verificar.close();
     ui->comboarchivos_listar->removeItem(ui->comboarchivos_listar->count()-1);
 }
 
