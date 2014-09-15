@@ -84,3 +84,10 @@ void window::on_pushButton_6_clicked()
     cruzararchivos.setModal(true);
     cruzararchivos.exec();
 }
+
+void window::on_pushButton_5_clicked()
+{
+    exportar exportararchivo(this);
+    exportararchivo.setModal(true);
+    exportararchivo.exec();
+}

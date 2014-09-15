@@ -13,31 +13,32 @@ reindexar::~reindexar()
     delete ui;
 }
 void reindexar::Insercion(){
-int i, j;
-indice temp;
-for (i = 1; i < indices.count(); i++){
-temp = indices[i];
-j = i-1;
-while ( ((j >= 0 &&indices[j].getLlave()> temp.getLlave()) ) ){
-indices[j+1]=indices[j];
-j--;
-}
-indices[j+1]=temp;
-}
+    int i, j;
+    indice temp;
+    for (i = 1; i < indices.count(); i++){
+        temp = indices[i];
+        j = i-1;
+    while ( ((j >= 0 &&indices[j].getLlave()> temp.getLlave()) ) ){
+        indices[j+1]=indices[j];
+        j--;
+    }
+    indices[j+1]=temp;
+    }
 }//fin metodo ordenar
+
 //ordenar enteros
 void reindexar::InsercionE(){
-int i, j;
-indice temp;
-for (i = 1; i < indices.count(); i++){
-temp = indices[i];
-j = i-1;
-while ( ((j >= 0 &&indices[j].getLlave().toInt()> temp.getLlave().toInt()) ) ){
-indices[j+1]=indices[j];
-j--;
-}
-indices[j+1]=temp;
-}
+    int i, j;
+    indice temp;
+    for (i = 1; i < indices.count(); i++){
+        temp = indices[i];
+        j = i-1;
+    while ( ((j >= 0 &&indices[j].getLlave().toInt()> temp.getLlave().toInt()) ) ){
+        indices[j+1]=indices[j];
+        j--;
+    }
+        indices[j+1]=temp;
+    }
 }//fin metodo ordenar
 
 void reindexar::on_pushButton_clicked()

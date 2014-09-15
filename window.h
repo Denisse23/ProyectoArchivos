@@ -12,6 +12,7 @@
 #include "ver.h"
 #include "reindexar.h"
 #include "cruzar.h"
+#include "exportar.h"
 namespace Ui {
 class window;
 }
@@ -44,6 +45,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_6_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::window *ui;

@@ -180,7 +180,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Exportar</string>
+     <string>Exportar xml</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
