@@ -1,13 +1,6 @@
 #include "registros.h"
 #include "ui_registros.h"
 
-static void process_line(const QByteArray &)
-{
-}
-
-static void process_line(const QString &)
-{
-}
 
 registros::registros(QWidget *parent) :
     QDialog(parent),
@@ -67,7 +60,6 @@ void registros::on_pushButton_clicked()
         verificar >> archivo;
         ui->comboarchivos_registros->addItem(QString::fromStdString(archivo));
     }
-
     camposa.clear();
     camposllenados.clear();
     ui->comboarchivos_registros->removeItem(ui->comboarchivos_registros->count()-1);
@@ -78,6 +70,7 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
 {
 
     file.close();
+    fileindice.close();
     ui->lnumre_registros->setText("0");
     ui->lnombrecampo_registros->setText("");
     ui->lnumcampo_registros->setText("");
@@ -96,21 +89,12 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
     if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
-        QString line = in.readLine();
-        QStringList divisiones = line.split(" ");
-        bool lla =false;
-        if(divisiones[3]=="Sí"){
-
-            lla=true;
-            campollave = camposa.count();
-        }
-        endoffsetestruc+= line.length()+1;
-        camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
-        while (!line.isNull()) {
+        QString line;
+        while (!in.atEnd()) {
             line = in.readLine();
-            process_line(line);
-            endoffsetestruc+= line.length()+1;
-           if(line=="|")
+
+            endoffsetestruc+=line.toUtf8().length()+1;
+             if(line=="|")
                 break;
             QStringList divisiones = line.split(" ");
             bool lla =false;
@@ -121,11 +105,11 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
        }
-       offsethead = endoffsetestruc+1;
+       offsethead = endoffsetestruc;
        line = in.readLine();
        endoffsetestruc+=line.length()+1;
        head = line.toInt();
-       endoffsetestruc+=2;
+       endoffsetestruc+=1;
        ui->lnumcampo_registros->setText("1");
        ui->lnombrecampo_registros->setText(camposa[0].getNombre());
        ui->ltipocampo_registros->setText(camposa[0].getTipo());
@@ -146,7 +130,14 @@ void registros::on_comboarchivos_registros_activated(const QString &arg1)
            }
 
           llenarllaves();
-
+       if(campollave!=-1){
+        QString nombreindice = ui->comboarchivos_registros->currentText();
+        nombreindice[nombreindice.length()-4] = 'l',nombreindice[nombreindice.length()-3] = 'i';
+        nombreindice[nombreindice.length()-2] = 'd',nombreindice[nombreindice.length()-1] = 'x';
+        fileindice.setFileName(nombreindice);
+        if (!fileindice.open(QIODevice::ReadWrite | QIODevice::Text))
+               return;
+       }
 
 }
 
@@ -183,19 +174,86 @@ void registros::on_boton_agregar_campo_clicked()
             for(int q=0;q<camposllenados.count();q++)
                  mandar+=camposllenados[q];
             mandar+='\n';
+            int offsetin=0;
+            for(int i=0;i<camposa.count();i++){
+                offsetin += camposa[i].getTamano();
+            }
+            offsetin++;
+            if(campollave!=-1){
+            int tamano = camposa[campollave].getTamano();
+            QList<indice> indices;
+            QTextStream in2(&fileindice);
+                int lugar =0;
+                bool seguir = false;
+                int contar =0;
+                if(fileindice.size()>0){
+                   fileindice.seek(0);
+                  QString line;
+                  while(!in2.atEnd()){
+                    line =  in2.readLine();
+                    indices.append(indice(line.mid(0,tamano).toUpper(),line.mid(tamano,line.length())));
+                    if(camposa[campollave].getTipo()=="Char"){
+                        if(camposllenados[campollave].toUpper()<indices[indices.count()-1].getLlave() && seguir ==false){
+                            lugar=contar;
+                            seguir = true;
+                        }
+                    }else{
+                        if(camposllenados[campollave].toInt()<indices[indices.count()-1].getLlave().toInt() && seguir ==false){
+                            lugar=contar;
+                            seguir = true;
+                        }
+                    }
+
+                        contar++;
+                    }
+                 }
+                 if(seguir==false)
+                    lugar=indices.count();
+
+                    if(head!=-1){
+                        indices.insert(lugar,indice (camposllenados[campollave].toUpper(),QString::number(head)));
+                    }else{
+                        int R = ((file.size()-(endoffsetestruc+1))/offsetin)+1;
+                        indices.insert(lugar,indice (camposllenados[campollave].toUpper(),QString::number(R)));
+                    }
+                    fileindice.seek(0);
+                    QString mandar1;
+                    for(int i=0;i<indices.count();i++){
+                        mandar1+=(indices[i].getLlave()+indices[i].getRRN())+'\n';
+                    }
+                    QTextStream out(&fileindice);
+                    out<<mandar1;
+                    out.flush();
+                                                                                                                                          in2.flush();
+            }
             if(head==-1){
                  QTextStream out(&file);
                  file.seek(file.size());
                  out << mandar;
                  out.flush();
             }else{
-                int offsetin=0;
-                for(int i=0;i<camposa.count();i++){
-                    offsetin += camposa[i].getTamano();
+                int offhe = offsethead;
+                file.seek(0);
+                QTextStream in3(&file);
+                QString linee;
+                offsetin=0;
+                bool empezar = false;
+                int RRR=0;
+                while (!in3.atEnd()){
+                    linee = in3.readLine();
+                    if(empezar){
+                        RRR++;
+                        if(RRR==head)
+                            break;
+                        else
+                            offsetin+=linee.toUtf8().length()+1;
+                    }
+                    if(linee=="$")
+                        empezar=true;
+
                 }
-                offsetin++;
-                offsetin *= (head-1);
                 offsetin+=endoffsetestruc+1;
+
                       ////////////Escribir en archivo
 
                     QTextStream in1(&file);
@@ -207,13 +265,15 @@ void registros::on_boton_agregar_campo_clicked()
                     in1.flush();
                     QStringList nuevohead = line.split("*");
                     head = nuevohead[1].toInt();
-
-                    file.seek(offsethead);
-                    in1<<nuevohead[1];
+                    QString mandarhead = "      ";
+                    for(int i=0;i<nuevohead[1].length();i++)
+                        mandarhead[i]=nuevohead[1][i];
+                    file.seek(offhe);
+                    in1<<mandarhead;
                     in1.flush();
 
 
-           }
+             }
              camposllenados.clear();
              llaves.clear();
              llenarllaves();

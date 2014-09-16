@@ -63,12 +63,9 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
         else
             ui->tabla_cruzar->setColumnWidth(i,campos1[i].getTamano()*15);
         ui->tabla_cruzar->setHorizontalHeaderItem(i,new QTableWidgetItem(campos1[i].getNombre()));
-        if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==true)
-            columnaeliminar=i;
-        else if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==false)
+        if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==false)
             campollave = i;
-
-    }
+      }
 
     for(int i=0;i<campos2.count();i++){
         int col =campos1.count()+i;
@@ -80,8 +77,6 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
          ui->tabla_cruzar->setHorizontalHeaderItem(col,new QTableWidgetItem(campos2[i].getNombre()));
          if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==true)
              columnaeliminar=col;
-         else if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==false)
-             campollave = col;
     }
     }else{
         for(int i=0;i<campos2.count();i++){
@@ -91,11 +86,8 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
             else
                 ui->tabla_cruzar->setColumnWidth(i,campos2[i].getTamano()*15);
             ui->tabla_cruzar->setHorizontalHeaderItem(i,new QTableWidgetItem(campos2[i].getNombre()));
-            if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==true)
-                columnaeliminar=i;
-            else if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==false)
+             if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==false)
                 campollave = i;
-
         }
 
         for(int i=0;i<campos1.count();i++){
@@ -108,8 +100,6 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
              ui->tabla_cruzar->setHorizontalHeaderItem(col,new QTableWidgetItem(campos1[i].getNombre()));
              if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==true)
                  columnaeliminar=col;
-             else if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==false)
-                 campollave = col;
         }
     }
 

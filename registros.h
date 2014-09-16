@@ -9,6 +9,7 @@
 #include <fstream>
 #include <QList>
 #include "campos.h"
+#include "indice.h"
 using namespace std;
 
 namespace Ui {
@@ -45,6 +46,7 @@ private:
     int endoffsetestruc;
     int offsethead;
     QFile file;
+    QFile fileindice;
     Ui::registros *ui;
 };
 

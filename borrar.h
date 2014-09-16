@@ -11,6 +11,7 @@
 #include <fstream>
 #include <QList>
 #include "campos.h"
+#include "indice.h"
 namespace Ui {
 class borrar;
 }
@@ -44,6 +45,7 @@ private slots:
 
 private:
     void borrarregistros(QList<int>);
+    int campollave;
     QList<campos> camposa;
     QList<int> RRN;
     int ultimocampoborrado;

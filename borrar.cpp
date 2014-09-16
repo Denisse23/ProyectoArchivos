@@ -13,7 +13,7 @@ borrar::~borrar()
     delete ui;
 }
 void borrar::borrarregistros(QList<int> RRNP){
-    char conectar[RRNP.count()+1][2];
+    int conectar[RRNP.count()+1][2];
         for(int i=0;i<RRNP.count()+1;i++){
             if(i==0){
              conectar[i][0]=ultimocampoborrado;
@@ -26,7 +26,6 @@ void borrar::borrarregistros(QList<int> RRNP){
              conectar[i][1]=RRNP[i];
            }
        }
-
     if(RRNP.count()>0){
        for(int i=0;i<RRNP.count()+1;i++){
             file.seek(0);
@@ -47,7 +46,7 @@ void borrar::borrarregistros(QList<int> RRNP){
                                 line[k]=' ';
                              }
                         }
-                        file.seek(offset+1);
+                        file.seek(offset);
                         in<<line<<endl;
                         break;
                     }
@@ -61,7 +60,7 @@ void borrar::borrarregistros(QList<int> RRNP){
                         line[k+1]= QString::number(conectar[i][1])[k];
                      }
                      line[QString::number(conectar[i][1]).length()+1]='*';
-                     file.seek(offset+1);
+                     file.seek(offset);
                      in<<line<<endl;
                      break;
                  }
@@ -70,10 +69,46 @@ void borrar::borrarregistros(QList<int> RRNP){
                      leer = true;
                  if(line=="|")
                      head = true;
-                 offset+= line.length()+1;
+
+                 offset+= (line.toUtf8().length()+1);
              }
 
         }
+
+    }
+
+    if(campollave!=-1){
+        QString nombreindice = ui->comboarchivos_borrar->currentText();
+        nombreindice[nombreindice.length()-4] = 'l',nombreindice[nombreindice.length()-3] = 'i';
+        nombreindice[nombreindice.length()-2] = 'd',nombreindice[nombreindice.length()-1] = 'x';
+        QFile fileindice (nombreindice);
+        if (!fileindice.open(QIODevice::ReadWrite | QIODevice::Text))
+            return;
+        QList<indice> indices;
+        QTextStream in(&fileindice);
+        QString line;
+        while(!in.atEnd()){
+            line = in.readLine();
+            indices.append(indice(line.mid(0,camposa[campollave].getTamano()),line.mid(camposa[campollave].getTamano(),line.length())));
+        }
+        for(int i=0;i<RRNP.count();i++){
+            for(int j=0;j<indices.count();j++){
+                if(indices[j].getRRN().toInt()==RRNP[i]){
+                    indices.removeAt(j);
+                    j=indices.count();
+                 }
+            }
+        }
+        fileindice.seek(0);
+        QTextStream out(&fileindice);
+        QString mandar1;
+
+           for(int i=0;i<indices.count();i++){
+              mandar1+=(indices[i].getLlave()+indices[i].getRRN())+'\n';
+           }
+           out<<mandar1;
+           fileindice.resize(fileindice.pos());
+        fileindice.close();
 
     }
 }
@@ -132,6 +167,7 @@ void borrar::on_pushButton_clicked()
 
 void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
 {
+    campollave=-1;
     file.close();
     RRN.clear();
     ultimocampoborrado=-1;
@@ -156,6 +192,7 @@ void borrar::on_comboarchivos_borrar_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
+                campollave=camposa.count();
             }
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 

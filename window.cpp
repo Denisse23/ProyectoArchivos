@@ -91,3 +91,10 @@ void window::on_pushButton_5_clicked()
     exportararchivo.setModal(true);
     exportararchivo.exec();
 }
+
+void window::on_pushButton_7_clicked()
+{
+    cruzarlineal cruzarlinealarchivo(this);
+    cruzarlinealarchivo.setModal(true);
+    cruzarlinealarchivo.exec();
+}

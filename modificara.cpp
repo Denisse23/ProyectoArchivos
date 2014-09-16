@@ -64,6 +64,7 @@ void modificara::on_bcargar_modificara_clicked()
 
 void modificara::on_comboarchivos_modificara_activated(const QString &arg1)
 {
+    llave=false;
     file.close();
     ui->ltextos_modificar->setText("");
     for(int i=ui->combocampos_modificar->count()-1;i>=0;i--)
@@ -75,21 +76,17 @@ void modificara::on_comboarchivos_modificara_activated(const QString &arg1)
         if (!file.open(QIODevice::ReadWrite | QIODevice::Text))
             return;
         QTextStream in(&file);
-        QString line = in.readLine();
-        QStringList divisiones = line.split(" ");
-        bool lla =false;
-        if(divisiones[3]=="Sí")
-            lla=true;
-
-        camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
-        while (!line.isNull()) {
+        QString line;
+        while (!in.atEnd()) {
             line = in.readLine();
             if(line=="|")
                 break;
             QStringList divisiones = line.split(" ");
             bool lla =false;
-            if(divisiones[3]=="Sí")
+            if(divisiones[3]=="Sí"){
                 lla=true;
+                llave=true;
+             }
            camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
        }
@@ -211,17 +208,29 @@ void modificara::on_pushButton_3_clicked()
 {
 
     QString mandar;
+    bool ll=false;
     foreach (campos k, camposa){
         mandar += k.getNombre()+" "+k.getTipo()+" "+QString::number(k.getTamano())+" ";
-        if(k.getEsLlave())
+        if(k.getEsLlave()){
             mandar+="Sí\n";
-        else
+            ll=true;
+        }else{
             mandar+="No\n";
+        }
 
    }
    mandar+="|\n";
    mandar+="-1    \n";
    mandar+="$\n";
+
+   //borrar indice, porque no hay campo llave
+   if(ll==false && llave==true){
+       QString nombreindice = ui->comboarchivos_modificara->currentText();
+       nombreindice[nombreindice.length()-4] = 'l',nombreindice[nombreindice.length()-3] = 'i';
+       nombreindice[nombreindice.length()-2] = 'd',nombreindice[nombreindice.length()-1] = 'x';
+       QFile fileindice(nombreindice);
+       fileindice.remove();
+   }
 
    QTextStream out(&file);
    file.seek(0);

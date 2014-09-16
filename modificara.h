@@ -43,6 +43,7 @@ private:
     QList<QString> archivos;
     QList<campos> camposa;
     QFile file;
+    bool llave;
     Ui::modificara *ui;
 };
 

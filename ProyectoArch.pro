@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     indice.cpp \
     reindexar.cpp \
     cruzar.cpp \
-    exportar.cpp
+    exportar.cpp \
+    cruzarlineal.cpp
 
 HEADERS  += window.h \
     nuevo.h \
@@ -41,7 +42,8 @@ HEADERS  += window.h \
     indice.h \
     reindexar.h \
     cruzar.h \
-    exportar.h
+    exportar.h \
+    cruzarlineal.h
 
 FORMS    += window.ui \
     nuevo.ui \
@@ -54,4 +56,5 @@ FORMS    += window.ui \
     ver.ui \
     reindexar.ui \
     cruzar.ui \
-    exportar.ui
+    exportar.ui \
+    cruzarlineal.ui

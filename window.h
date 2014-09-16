@@ -13,6 +13,7 @@
 #include "reindexar.h"
 #include "cruzar.h"
 #include "exportar.h"
+#include "cruzarlineal.h"
 namespace Ui {
 class window;
 }
@@ -47,6 +48,8 @@ private slots:
     void on_pushButton_6_clicked();
 
     void on_pushButton_5_clicked();
+
+    void on_pushButton_7_clicked();
 
 private:
     Ui::window *ui;
