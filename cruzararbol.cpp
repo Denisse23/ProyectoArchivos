@@ -223,20 +223,11 @@ void cruzararbol::on_combocampos_cruzararbol_activated(const QString &arg1)
          arbol.insertNodo(temp);
      }
      filea.close();
-     int padre=0;
-     bool encontro = false;
-     for(int i=0;i<arbol.getNodos().count();i++){
-        for(int j=0;j<arbol.getNodos()[i].getSons().count();j++){
-            if(arbol.getNodos()[i].getSons()[j]==i){
-                j=arbol.getNodos()[i].getSons().count();
-                encontro=true;
-            }
-        }
-        if(encontro==false){
-            padre=i;
-            break;
-        }
-     }
+     int padre=arbol.getNodos().count()-1;
+
+
+     ui->comboarchivo1_cruzararbol->addItem(QString::number(padre));
+
      file1.seek(0);
      file2.seek(0);
      if(campo1==false){
@@ -280,7 +271,7 @@ void cruzararbol::on_combocampos_cruzararbol_activated(const QString &arg1)
                 int camino=0;
                 for(int k=0;k<campos2.count();k++){
                     if(k!=columnaeliminar-campos1.count()){
-                        ui->tabla_cruzararbol->setItem(i,k+(campos1.count()-1),new QTableWidgetItem(line.mid(camino,campos2[k].getTamano())));
+                        ui->tabla_cruzararbol->setItem(i,k+(campos1.count()-1),new QTableWidgetItem(line2.mid(camino,campos2[k].getTamano())));
                     }
                     camino+=campos2[k].getTamano();
                 }
@@ -328,7 +319,7 @@ void cruzararbol::on_combocampos_cruzararbol_activated(const QString &arg1)
                   int camino=0;
                   for(int k=0;k<campos1.count();k++){
                       if(k!=columnaeliminar-campos2.count()){
-                          ui->tabla_cruzararbol->setItem(i,k+(campos2.count()-1),new QTableWidgetItem(line.mid(camino,campos1[k].getTamano())));
+                          ui->tabla_cruzararbol->setItem(i,k+(campos2.count()-1),new QTableWidgetItem(line2.mid(camino,campos1[k].getTamano())));
                       }
                       camino+=campos1[k].getTamano();
                   }
@@ -339,5 +330,16 @@ void cruzararbol::on_combocampos_cruzararbol_activated(const QString &arg1)
      }
 
 
-
+     ui->combocampos_cruzararbol->addItem(QString::number(ui->tabla_cruzararbol->columnCount()));
+     int rowcount = ui->tabla_cruzararbol->rowCount();
+     int i=0;
+      while(i<rowcount){
+         QTableWidgetItem* item = ui->tabla_cruzararbol->item(i,ui->tabla_cruzararbol->columnCount()-1);
+         if(item==NULL){
+             ui->tabla_cruzararbol->removeRow(i);
+             rowcount--;
+         }else{
+             i++;
+        }
+      }
 }
