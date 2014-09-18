@@ -28,7 +28,7 @@ void listar::on_pushButton_clicked()
         string archivo;
         verificar >> archivo;
         ui->comboarchivos_listar->addItem(QString::fromStdString(archivo));
-    }
+    }//fin del while
     verificar.close();
     ui->comboarchivos_listar->removeItem(ui->comboarchivos_listar->count()-1);
 }
@@ -55,7 +55,7 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
             if(divisiones[3]=="Sí")
                 lla=true;
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
-        }
+        }//fin del while
         for(int i=0;i<camposa.count();i++){
             ui->tablaregistros_listar->insertColumn(i);
             if(camposa[i].getNombre().length()>camposa[i].getTamano())
@@ -63,7 +63,7 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
             else
                 ui->tablaregistros_listar->setColumnWidth(i,camposa[i].getTamano()*20);
             ui->tablaregistros_listar->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
-        }
+        }//fin del for
 
             bool empezar = false;
             while (!in.atEnd()) {
@@ -76,7 +76,7 @@ void listar::on_comboarchivos_listar_activated(const QString &arg1)
                        for(int o=0;o<camposa.count();o++){
                             ui->tablaregistros_listar->setItem(rowc,o,new QTableWidgetItem(line.mid(camino,camposa[o].getTamano())));
                             camino+=camposa[o].getTamano();
-                        }
+                        }//fin del for
 
 //
                      }

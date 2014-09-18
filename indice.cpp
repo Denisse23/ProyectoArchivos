@@ -23,15 +23,15 @@ QString indice::getRRN(char estruc){
         QString compRRN = "      ";
         for(int i=0;i<RRN.length();i++){
             compRRN[i]=RRN[i];
-        }
+        }//fin del for
         return compRRN;
     }else{
         QString compRRN = "          ";
         for(int i=0;i<RRN.length();i++){
             compRRN[i]=RRN[i];
-        }
+        }//fin del for
         return compRRN;
-    }
+    }//fin del else
 }
 
 void indice::setLLave(QString llav){

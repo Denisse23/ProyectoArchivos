@@ -33,7 +33,7 @@ void cruzar::on_pushButton_clicked()
         verificar >> archivo;
         ui->comboarchivo1_cruzar->addItem(QString::fromStdString(archivo));
         ui->comboarchivo2_cruzar->addItem(QString::fromStdString(archivo));
-    }
+    }//fin del while
     verificar.close();
 
     ui->comboarchivo1_cruzar->removeItem(ui->comboarchivo1_cruzar->count()-1);
@@ -51,7 +51,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
     for(int i=0;i<campos2.count();i++){
         if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==true)
             campo1=false;
-    }
+    }//fin del for
     int columnaeliminar=0;
     int campollave=0;
 
@@ -65,7 +65,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
         ui->tabla_cruzar->setHorizontalHeaderItem(i,new QTableWidgetItem(campos1[i].getNombre()));
         if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==false)
             campollave = i;
-      }
+      }//fin del for
 
     for(int i=0;i<campos2.count();i++){
         int col =campos1.count()+i;
@@ -77,7 +77,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
          ui->tabla_cruzar->setHorizontalHeaderItem(col,new QTableWidgetItem(campos2[i].getNombre()));
          if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==true)
              columnaeliminar=col;
-    }
+    }//fin del for
     }else{
         for(int i=0;i<campos2.count();i++){
             ui->tabla_cruzar->insertColumn(i);
@@ -88,7 +88,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
             ui->tabla_cruzar->setHorizontalHeaderItem(i,new QTableWidgetItem(campos2[i].getNombre()));
              if(campos2[i].getNombre()==ui->combocampos_cruzar->currentText() && campos2[i].getEsLlave()==false)
                 campollave = i;
-        }
+        }//fin del for
 
         for(int i=0;i<campos1.count();i++){
             int col =campos2.count()+i;
@@ -100,7 +100,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
              ui->tabla_cruzar->setHorizontalHeaderItem(col,new QTableWidgetItem(campos1[i].getNombre()));
              if(campos1[i].getNombre()==ui->combocampos_cruzar->currentText() && campos1[i].getEsLlave()==true)
                  columnaeliminar=col;
-        }
+        }//fin del for
     }
 
      ui->tabla_cruzar->removeColumn(columnaeliminar);
@@ -121,12 +121,12 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
                          for(int o=0;o<campos1.count();o++){
                             ui->tabla_cruzar->setItem(rowc,o,new QTableWidgetItem(line.mid(camino,campos1[o].getTamano())));
                           camino+=campos1[o].getTamano();
-                         }
-                     }
-              }
+                         }//fin del for
+                     }//fin del if
+              }//fin del if
             if(line=="$")
                 empezar = true;
-       }
+       }//fin del while
 
        QTextStream in2(&file2);
        empezar = false;
@@ -146,14 +146,14 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
                        if(o!=columnaeliminar-campos1.count()){
                        ui->tabla_cruzar->setItem(i,col,new QTableWidgetItem(line.mid(camino,campos2[o].getTamano())));
                        col++;
-                       }
+                       }//fin del uf
                        camino+=campos2[o].getTamano();
-                       }
-                }
+                       }//fin del for
+                }//fin del if
 
-            }
+            }//fin del for
 
-           }
+           }//fin del if
            if(line=="$")
                empezar = true;
        }
@@ -172,12 +172,12 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
                     for(int o=0;o<campos2.count();o++){
                        ui->tabla_cruzar->setItem(rowc,o,new QTableWidgetItem(line.mid(camino,campos2[o].getTamano())));
                      camino+=campos2[o].getTamano();
-                    }
-                }
-            }
+                    }//fin del for
+                }//fin del if
+            }//fin del if
             if(line=="$")
                 empezar = true;
-        }
+        }//fin del while
         QTextStream in2(&file1);
         empezar = false;
         int comienzoc =0;
@@ -197,15 +197,15 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
                         if(o!=columnaeliminar-campos2.count()){
                         ui->tabla_cruzar->setItem(i,col,new QTableWidgetItem(line.mid(camino,campos1[o].getTamano())));
                         col++;
-                        }
+                        }//fin del if
                         camino+=campos1[o].getTamano();
-                        }
-                 }
+                        }//fin del for
+                 }//fin del if
 
 
 
-            }
-           }
+            }//fin del for
+           }//fin del if
           if(line=="$")
                empezar = true;
        }//fin del while
@@ -222,7 +222,7 @@ void cruzar::on_combocampos_cruzar_activated(const QString &arg1)
           }else{
               i++;
          }
-       }
+       }//fin del while
 }
 
 void cruzar::on_comboarchivo1_cruzar_activated(const QString &arg1)
@@ -248,13 +248,13 @@ void cruzar::on_comboarchivo1_cruzar_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
-            }
+            }//fin del if
 
             campos1.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-        }
+        }//fin del while
 
-}
+}//fin del metodo
 
 void cruzar::on_comboarchivo2_cruzar_activated(const QString &arg1)
 {
@@ -278,11 +278,11 @@ void cruzar::on_comboarchivo2_cruzar_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
-            }
+            }//fin del if
 
             campos2.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-        }
+        }//fin del while
 }
 
 void cruzar::on_pushButton_2_clicked()
@@ -301,10 +301,10 @@ void cruzar::on_pushButton_2_clicked()
                       if(campos1[i].getEsLlave() || campos2[j].getEsLlave())
                       ui->combocampos_cruzar->addItem(campos1[i].getNombre());
                       j=campos2.count();
-                  }
-              }
-          }
-      }
+                  }//fin del if
+              }//fin del for
+          }//fin del for
+      }//fin del if
 
 
 }

@@ -50,19 +50,19 @@ void buscar::on_pushButton_clicked()
             if(mas==1){
                 mas++;
                 break;
-             }
+             }//fin del if
             if(activar)
                 if(line!="\n")
                   mas++;
              if(line=="$")
                 activar = true;
-          }
+          }//fin del while
 
         if(mas==2){
           ui->comboarchivos_buscar->addItem(archivos[i]);
-        }
+        }//fin del if
         file.close();
-      }
+      }//fin del for
 }
 
 
@@ -83,13 +83,13 @@ void buscar::on_pushButton_2_clicked()
             else
                 ui->tablaBusqueda->setColumnWidth(i,camposa[i].getTamano()*20);
             ui->tablaBusqueda->setHorizontalHeaderItem(i,new QTableWidgetItem(camposa[i].getNombre()));
-        }
+        }//fin del for
 
 
         int sumatamanos =0;
         for(int i=0;i<ui->combo_estructura->currentIndex();i++){
             sumatamanos+= camposa[i].getTamano();
-        }
+        }//fin del for
                file.seek(0);
                QTextStream in(&file);
                QString linea;
@@ -107,9 +107,9 @@ void buscar::on_pushButton_2_clicked()
                       for(int o=0;o<camposa.count();o++){
                            ui->tablaBusqueda->setItem(rowc,o,new QTableWidgetItem(linea.mid(camino,camposa[o].getTamano())));
                            camino+=camposa[o].getTamano();
-                       }
-                   }
-               }
+                       }//fin del for
+                   }//fin del if
+               }//fin del if
                if(linea=="$")
                    iniciore = true;
              }//fin while
@@ -147,10 +147,10 @@ void buscar::on_comboarchivos_buscar_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
-            }
+            }//fin del if
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-       }
+       }//fin del while
 
         for(int i=0;i<camposa.count();i++)
             ui->combo_estructura->addItem(camposa[i].getNombre());

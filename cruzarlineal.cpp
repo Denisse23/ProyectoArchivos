@@ -31,7 +31,7 @@ void cruzarlineal::on_pushButton_clicked()
         verificar >> archivo;
         ui->comboarchivo1_cruzarlineal->addItem(QString::fromStdString(archivo));
         ui->comboarchivo2_cruzarlineal->addItem(QString::fromStdString(archivo));
-    }
+    }//fin del while
     verificar.close();
 
     ui->comboarchivo1_cruzarlineal->removeItem(ui->comboarchivo1_cruzarlineal->count()-1);
@@ -61,11 +61,11 @@ void cruzarlineal::on_comboarchivo1_cruzarlineal_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
-            }
+            }//fin del if
 
             campos1.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-        }
+        }//fin del while
 
 }
 
@@ -91,11 +91,11 @@ void cruzarlineal::on_comboarchivo2_cruzarlineal_activated(const QString &arg1)
             bool lla =false;
             if(divisiones[3]=="Sí"){
                 lla=true;
-            }
+            }//fin del if
 
             campos2.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
 
-        }
+        }//fin del while
 }
 
 void cruzarlineal::on_pushButton_2_clicked()
@@ -114,10 +114,10 @@ void cruzarlineal::on_pushButton_2_clicked()
                       if(campos1[i].getEsLlave() || campos2[j].getEsLlave())
                       ui->combocampos_cruzarlineal->addItem(campos1[i].getNombre());
                       j=campos2.count();
-                  }
-              }
-          }
-      }
+                  }//fin del if
+              }//fin del for
+          }//fin del for
+      }//fin del if
 }
 
 void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
@@ -131,7 +131,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
     for(int i=0;i<campos2.count();i++){
         if(campos2[i].getNombre()==ui->combocampos_cruzarlineal->currentText() && campos2[i].getEsLlave()==true)
             campo1=false;
-    }
+    }//fin del for
     int columnaeliminar=0;
     int campollave=0;
     int tamano=0;
@@ -146,7 +146,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
         if(campos1[i].getNombre()==ui->combocampos_cruzarlineal->currentText() && campos1[i].getEsLlave()==false)
             campollave = i;
 
-    }
+    }//fin del for
 
     for(int i=0;i<campos2.count();i++){
         tamano+=campos2[i].getTamano();
@@ -159,7 +159,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
          ui->tabla_cruzarlineal->setHorizontalHeaderItem(col,new QTableWidgetItem(campos2[i].getNombre()));
          if(campos2[i].getNombre()==ui->combocampos_cruzarlineal->currentText() && campos2[i].getEsLlave()==true)
              columnaeliminar=col;
-    }
+    }//fin del for
     }else{
         for(int i=0;i<campos2.count();i++){
             ui->tabla_cruzarlineal->insertColumn(i);
@@ -170,7 +170,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
             ui->tabla_cruzarlineal->setHorizontalHeaderItem(i,new QTableWidgetItem(campos2[i].getNombre()));
             if(campos2[i].getNombre()==ui->combocampos_cruzarlineal->currentText() && campos2[i].getEsLlave()==false)
                 campollave = i;
-        }
+        }//fin del for
 
         for(int i=0;i<campos1.count();i++){
             tamano+=campos1[i].getTamano();
@@ -183,8 +183,8 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
              ui->tabla_cruzarlineal->setHorizontalHeaderItem(col,new QTableWidgetItem(campos1[i].getNombre()));
              if(campos1[i].getNombre()==ui->combocampos_cruzarlineal->currentText() && campos1[i].getEsLlave()==true)
                  columnaeliminar=col;
-        }
-    }
+        }//fin del for
+    }//fin del else
 
      ui->tabla_cruzarlineal->removeColumn(columnaeliminar);
      QString nombreindice;
@@ -195,7 +195,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
      }else{
          nombreindice = file1.fileName();
          cantr = file1.size()/tamano;
-     }
+     }//fin del else
      QList<QString> matriz[cantr][2];
      nombreindice[nombreindice.length()-4] = 'l',nombreindice[nombreindice.length()-3] = 'i';
      nombreindice[nombreindice.length()-2] = 'd',nombreindice[nombreindice.length()-1] = 'x';
@@ -209,7 +209,7 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
          linea = ini.readLine();
          matriz[RRN][0].append(linea.mid(0,linea.length()-6));
          RRN++;
-     }
+     }//fin del while
 
      file1.seek(0);
      file2.seek(0);
@@ -232,15 +232,15 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                               if(data.toUpper()==matriz[i][0][0]){
                                   matriz[i][1].append(QString::number(rowc));
                                  break;
-                              }
+                              }//fin del if
 
-                            }
-                         }
+                            }//fin del for
+                         }//fin del if
                         ui->tabla_cruzarlineal->setItem(rowc,o,new QTableWidgetItem(data));
                       camino+=campos1[o].getTamano();
-                   }
-                 }
-             }
+                   }//fin del for
+                 }//fin del if
+             }//fin del if
              if(line=="$")
                  empezar=true;
 
@@ -261,11 +261,11 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                             if(data.toUpper()==matriz[i][0][0]){
                               lugma = i;
                               break;
-                            }
-                         }
-                    }
+                            }//fin del if
+                         }//fin del for
+                    }//fin del if
                     camino+=campos2[o].getTamano();
-                }
+                }//fin del for
                 camino=0;
                 int col  = campos1.count();
                 for(int o=0;o<campos2.count();o++){
@@ -275,14 +275,14 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                             for(int u=0;u<matriz[lugma][1].count();u++){
                                ui->tabla_cruzarlineal->setItem(matriz[lugma][1][u].toInt(),col+o,new QTableWidgetItem(data));
                                ui->comboarchivo1_cruzarlineal->addItem(matriz[lugma][1][u]);
-                         }
-                        }
+                         }//fin del for
+                        }//fin del if
                     }else{
                         col-=1;
-                    }
+                    }//fin del else
                     camino+=campos2[o].getTamano();
-                }
-             }
+                }//fin del for
+             }//fin del if
              if(line=="$")
                  empezar = true;
          }
@@ -305,15 +305,15 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                               if(data.toUpper()==matriz[i][0][0]){
                                   matriz[i][1].append(QString::number(rowc));
                                  break;
-                              }
+                              }//fin del if
 
-                            }
-                         }
+                            }//fin del for
+                         }//fin del if
                         ui->tabla_cruzarlineal->setItem(rowc,o,new QTableWidgetItem(data));
                       camino+=campos2[o].getTamano();
-                   }
-                }
-              }
+                   }//fin del for
+                }//fin del if
+              }//fin del if
              if(line=="$")
                  empezar=true;
 
@@ -333,11 +333,11 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                             if(data.toUpper()==matriz[i][0][0]){
                               lugma = i;
                               break;
-                            }
-                         }
-                    }
+                            }//fin del if
+                         }//fin del for
+                    }//fin del if
                     camino+=campos1[o].getTamano();
-                }
+                }//fin del for
                 camino=0;
                 int col  = campos2.count();
                 for(int o=0;o<campos1.count();o++){
@@ -346,19 +346,19 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
                         if(lugma>-1){
                             for(int u=0;u<matriz[lugma][1].count();u++){
                                ui->tabla_cruzarlineal->setItem(matriz[lugma][1][u].toInt(),col+o,new QTableWidgetItem(data));
-                            }
-                        }
+                            }//fin del for
+                        }//fin del if
                     }else{
                         col-=1;
                     }
                     camino+=campos1[o].getTamano();
-                }
-             }
+                }//fin del for
+             }//fin del if
              if(line=="$")
                  empezar = true;
-         }
+         }//fin del while
 
-     }
+     }//fin del else
 
      ui->combocampos_cruzarlineal->addItem(QString::number(ui->tabla_cruzarlineal->columnCount()));
      int rowcount = ui->tabla_cruzarlineal->rowCount();
@@ -370,8 +370,8 @@ void cruzarlineal::on_combocampos_cruzarlineal_activated(const QString &arg1)
              rowcount--;
          }else{
              i++;
-        }
-      }
+        }//fin del else
+      }//fin del while
 
 
 }

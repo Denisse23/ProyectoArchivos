@@ -22,7 +22,7 @@ void exportar::on_pushButton_clicked()
         string archivo;
         verificar >> archivo;
         ui->comboarchivos_exportar->addItem(QString::fromStdString(archivo));
-    }
+    }//fin del while
     ui->comboarchivos_exportar->removeItem(ui->comboarchivos_exportar->count()-1);
 }
 
@@ -46,7 +46,7 @@ void exportar::on_pushButton_2_clicked()
     QString nomb;
     for(int i=0;i<nombre.length()-5;i++){
         nomb+=nombre[i];
-    }
+    }//fin del for
 
     out<<"<"+nomb+">"<<endl;
     file.seek(0);
@@ -65,18 +65,18 @@ void exportar::on_pushButton_2_clicked()
                        out<<line.mid(camino,camposa[i].getTamano());
                        out<<"</"+camposa[i].getNombre()+">"<<endl;
                        camino+=camposa[i].getTamano();
-                   }
+                   }//fin del for
                     out<<"</"+nomb+">"<<endl;
-                }
-         }
+                }//fin del if
+         }//fin del if
        if(line=="$")
            empezar = true;
-  }
+  }//fin del while
   out<<"</"+nomb+">";
 
   file1.close();
   ui->comboarchivos_exportar->clear();
-  }
+  }//fin del if
 }
 
 void exportar::on_comboarchivos_exportar_activated(const QString &arg1)
@@ -97,6 +97,6 @@ void exportar::on_comboarchivos_exportar_activated(const QString &arg1)
             if(divisiones[3]=="Sí")
                 lla=true;
             camposa.append(campos(divisiones[0],divisiones[1],divisiones[2].toInt(),lla));
-    }
+    }//fin del while
 
 }
