@@ -7,6 +7,8 @@
 #include <QTextStream>
 #include <QDialog>
 #include <QList>
+#include "btree.h"
+#include "nodo.h"
 namespace Ui {
 class reindexar;
 }
@@ -32,6 +34,7 @@ private:
     void InsercionE();
     QList<campos> camposa;
     QList<indice> indices;
+    btree arbol;
     int campollave;
     Ui::reindexar *ui;
 };

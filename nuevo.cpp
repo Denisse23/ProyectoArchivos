@@ -57,9 +57,12 @@ void nuevo::on_bcrear_nuevo_clicked()
     if(ui->lnombrearchivo_nuevo->text()!="" && ui->lnombrearchivo_nuevo->text()!="Ingrese un nombre de archivo" && listacampos.count()>0){
        //nombrando el archivo
         string nombrearchivo= (ui->lnombrearchivo_nuevo->text()+".data").toStdString();
-        string nombreindice = (ui->lnombrearchivo_nuevo->text()+".lidx").toStdString();
+        QString nombreindice = ui->lnombrearchivo_nuevo->text()+".lidx";
+        QString nombreindicea = ui->lnombrearchivo_nuevo->text()+".btidx";
+
         ifstream verificar("archivoscreados.txt");
         bool esta = false;
+        //verificar que el archivo no existe
         while(verificar.good()){
             string comparar;
             verificar >> comparar;
@@ -69,18 +72,11 @@ void nuevo::on_bcrear_nuevo_clicked()
         verificar.close();
         if(esta ==false){
             char nombrea[30];
-            char nombreai[30];
             int lennom = nombrearchivo.length();
             for(int i=0;i<lennom;i++)
                 nombrea[i] = nombrearchivo[i];
             if(lennom<30)
              nombrea[lennom]='\0';
-
-            lennom=nombreindice.length();
-            for(int i=0;i<lennom;i++)
-             nombreai[i]= nombreindice[i];
-             if(lennom<30)
-             nombreai[lennom]='\0';
 
         //agregar el nombre del archivo a "archivoscreados"
         ofstream inscribir("archivoscreados.txt", fstream::app);
@@ -90,7 +86,7 @@ void nuevo::on_bcrear_nuevo_clicked()
         //limpiar campos
         ui->lnombrearchivo_nuevo->setText("");
         //Crear archivo
-
+        ///Escribir estructura archivo//////////////
         QString mandar;
         bool hayllave = false;
         foreach (campos k, listacampos){
@@ -108,11 +104,17 @@ void nuevo::on_bcrear_nuevo_clicked()
        ofstream file(nombrea);
        file<<mandar.toStdString();
        file.close();
+
+       ///índices///////////
        if(hayllave){
        //agregar el índice
-       QFile filei(QString::fromStdString(nombreai));
+       QFile filei(nombreindice);
        filei.open(QIODevice::ReadWrite | QIODevice::Text);
        filei.close();
+       //agregar tree
+       QFile fileia(nombreindicea);
+       fileia.open(QIODevice::ReadWrite | QIODevice::Text);
+       fileia.close();
        }
         //Borrar tabla
 

@@ -14,6 +14,7 @@
 #include "cruzar.h"
 #include "exportar.h"
 #include "cruzarlineal.h"
+#include "cruzararbol.h"
 namespace Ui {
 class window;
 }
@@ -50,6 +51,8 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_7_clicked();
+
+    void on_pushButton_8_clicked();
 
 private:
     Ui::window *ui;

@@ -10,15 +10,28 @@ indice::indice(QString llav,QString R){
 }
 
 QString indice::getLlave(){
-    return llave;
+
+return llave;
 }
 
-QString indice::getRRN(){
-    QString compRRN = "      ";
-    for(int i=0;i<RRN.length();i++){
-        compRRN[i]=RRN[i];
+int indice::getllave(int en){
+    return llave.toInt();
+}
+
+QString indice::getRRN(char estruc){
+    if(estruc=='l'){
+        QString compRRN = "      ";
+        for(int i=0;i<RRN.length();i++){
+            compRRN[i]=RRN[i];
+        }
+        return compRRN;
+    }else{
+        QString compRRN = "                    ";
+        for(int i=0;i<RRN.length();i++){
+            compRRN[i]=RRN[i];
+        }
+        return compRRN;
     }
-    return compRRN;
 }
 
 void indice::setLLave(QString llav){

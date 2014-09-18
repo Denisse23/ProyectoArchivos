@@ -27,7 +27,10 @@ SOURCES += main.cpp\
     reindexar.cpp \
     cruzar.cpp \
     exportar.cpp \
-    cruzarlineal.cpp
+    cruzarlineal.cpp \
+    btree.cpp \
+    nodo.cpp \
+    cruzararbol.cpp
 
 HEADERS  += window.h \
     nuevo.h \
@@ -43,7 +46,10 @@ HEADERS  += window.h \
     reindexar.h \
     cruzar.h \
     exportar.h \
-    cruzarlineal.h
+    cruzarlineal.h \
+    btree.h \
+    nodo.h \
+    cruzararbol.h
 
 FORMS    += window.ui \
     nuevo.ui \
@@ -57,4 +63,5 @@ FORMS    += window.ui \
     reindexar.ui \
     cruzar.ui \
     exportar.ui \
-    cruzarlineal.ui
+    cruzarlineal.ui \
+    cruzararbol.ui

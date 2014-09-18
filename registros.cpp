@@ -219,7 +219,7 @@ void registros::on_boton_agregar_campo_clicked()
                     fileindice.seek(0);
                     QString mandar1;
                     for(int i=0;i<indices.count();i++){
-                        mandar1+=(indices[i].getLlave()+indices[i].getRRN())+'\n';
+                        mandar1+=(indices[i].getLlave()+indices[i].getRRN('l'))+'\n';
                     }
                     QTextStream out(&fileindice);
                     out<<mandar1;

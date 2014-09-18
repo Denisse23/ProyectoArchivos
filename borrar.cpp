@@ -93,7 +93,7 @@ void borrar::borrarregistros(QList<int> RRNP){
         }
         for(int i=0;i<RRNP.count();i++){
             for(int j=0;j<indices.count();j++){
-                if(indices[j].getRRN().toInt()==RRNP[i]){
+                if(indices[j].getRRN('l').toInt()==RRNP[i]){
                     indices.removeAt(j);
                     j=indices.count();
                  }
@@ -104,7 +104,7 @@ void borrar::borrarregistros(QList<int> RRNP){
         QString mandar1;
 
            for(int i=0;i<indices.count();i++){
-              mandar1+=(indices[i].getLlave()+indices[i].getRRN())+'\n';
+              mandar1+=(indices[i].getLlave()+indices[i].getRRN('l'))+'\n';
            }
            out<<mandar1;
            fileindice.resize(fileindice.pos());

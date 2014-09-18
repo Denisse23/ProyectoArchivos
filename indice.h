@@ -10,7 +10,8 @@ public:
     indice();
     indice(QString,QString);
     QString getLlave();
-    QString getRRN();
+    int getllave(int);
+    QString getRRN(char);
     void setLLave(QString);
     void setRRN(QString);
 

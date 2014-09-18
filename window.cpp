@@ -98,3 +98,10 @@ void window::on_pushButton_7_clicked()
     cruzarlinealarchivo.setModal(true);
     cruzarlinealarchivo.exec();
 }
+
+void window::on_pushButton_8_clicked()
+{
+    cruzararbol cruzararbolarchivo(this);
+    cruzararbolarchivo.setModal(true);
+    cruzararbolarchivo.exec();
+}
