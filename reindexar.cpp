@@ -97,6 +97,7 @@ void reindexar::on_comboarchivos_reindexar_activated(const QString &arg1)
     campollave = -1;
     camposa.clear();
     indices.clear();
+    QList<indice> indicesar;
     btree arboll;
     arbol = arboll;
     QFile file(arg1);
@@ -130,10 +131,11 @@ void reindexar::on_comboarchivos_reindexar_activated(const QString &arg1)
           if(empezar && line[0]!='*'){
              QString llave  = line.mid(offllave,camposa[campollave].getTamano());
              indices.append(indice(llave.toUpper(),QString::number(RRN)));
+             indicesar.append(indice(llave.toUpper(),QString::number(offsetarbol)));
              if(camposa[campollave].getTipo()=="Char"){
-                 pa= arbol.insertIndice(indices[indices.count()-1],pa,1);
+                 pa= arbol.insertIndice(indicesar[indicesar.count()-1],pa,1);
              }else{
-                 pa= arbol.insertIndice(indices[indices.count()-1],pa,2);
+                 pa= arbol.insertIndice(indicesar[indicesar.count()-1],pa,2);
              }
 
           }
@@ -168,7 +170,7 @@ void reindexar::on_pushButton_2_clicked()
     QString mandara;
     for(int i=0;i<arbol.getNodos().count();i++){
         for(int j=0;j<arbol.getNodos()[i].getData().count();j++){
-            mandara+=arbol.getNodos()[i].getData()[j].getLlave()+arbol.getNodos()[i].getData()[j].getRRN('l');
+            mandara+=arbol.getNodos()[i].getData()[j].getLlave()+arbol.getNodos()[i].getData()[j].getRRN('a');
         }
 
         for(int j=0;j<arbol.getNodos()[i].getSons().count();j++){
@@ -182,7 +184,6 @@ void reindexar::on_pushButton_2_clicked()
         mandara+='\n';
 
     }
-     ui->comboarchivos_reindexar->addItem(QString::number(arbol.getNodos().count()));
 
      outa<<mandara;
      filea.resize(filea.pos());

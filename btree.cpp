@@ -12,6 +12,11 @@ QList<nodo> btree::getNodos(){
 void btree::setNodos(QList<nodo> n){
     nodos=  n;
 }
+
+void btree::insertNodo(nodo nod){
+    nodos.append(nod);
+}
+
 int btree::insertIndice(indice in,int pos,int tipo){
     int pa = pos;
 if(tipo==1){
@@ -201,5 +206,78 @@ int btree::dividir(int pos,int tipo){
      }
  }
     return pa;
+
+}
+
+QList<int> btree::buscarIndice(QString in,int pos,int tipo){
+    int posnodo=-1;
+    int posdata = -1;
+    if(nodos.count()>0){
+    if(tipo==1){
+    if(!(nodos[pos].getSons()[0]==-1)){
+        for(int i=0;i<nodos[pos].getData().count();i++){
+            if(nodos[pos].getData()[i].getLlave()!=""){
+                if(nodos[pos].getData()[i].getLlave()!=in){
+                if(nodos[pos].getHijoIzquiero(i)!=-1 && in<nodos[pos].getData()[i].getLlave()){
+                   buscarIndice(in,nodos[pos].getHijoIzquiero(i),1);
+                 }else if(i==nodos[pos].getData().count()-1){
+                    buscarIndice(in,nodos[pos].getHijoDerecho(i),1);
+                }
+                }else{
+                    posnodo=pos;
+                    posdata=i;
+                    break;
+                }
+            }else{
+                buscarIndice(in,nodos[pos].getHijoIzquiero(i),1);
+                break;
+            }
+       }
+    }else{
+        for(int i=0;i<nodos[pos].getData().count();i++){
+            if(nodos[pos].getData()[i].getLlave()==in){
+                posnodo=pos;
+                posdata=i;
+                break;
+            }
+        }
+    }
+
+    }else{
+        if(!(nodos[pos].getSons()[0]==-1)){
+            for(int i=0;i<nodos[pos].getData().count();i++){
+                if(nodos[pos].getData()[i].getLlave()!=""){
+                    if(nodos[pos].getData()[i].getLlave()!=in){
+                    if(nodos[pos].getHijoIzquiero(i)!=-1 && in.toInt()<nodos[pos].getData()[i].getLlave().toInt()){
+                       buscarIndice(in,nodos[pos].getHijoIzquiero(i),2);
+                     }else if(i==nodos[pos].getData().count()-1){
+                        buscarIndice(in,nodos[pos].getHijoDerecho(i),2);
+                    }
+                    }else{
+                        posnodo=pos;
+                        posdata=i;
+                        break;
+                    }
+                }else{
+                    buscarIndice(in,nodos[pos].getHijoIzquiero(i),2);
+                    break;
+                }
+            }
+        }else{
+            for(int i=0;i<nodos[pos].getData().count();i++){
+                if(nodos[pos].getData()[i].getLlave().toInt()==in.toInt()){
+                    posnodo=pos;
+                    posdata=i;
+                    break;
+                }
+            }
+        }
+    }
+    }//fin primer if
+    QList<int> mandar;
+    mandar.append(posnodo);
+    mandar.append(posdata);
+
+    return mandar;
 
 }

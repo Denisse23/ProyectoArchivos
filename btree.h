@@ -14,6 +14,8 @@ public:
     void setNodos(QList<nodo>);
     int insertIndice(indice,int,int);
     int dividir(int,int);
+    void insertNodo(nodo);
+    QList<int> buscarIndice(QString,int,int tipo);
 
 
 };

@@ -9,6 +9,9 @@
 #include <QList>
 #include <QTextStream>
 #include "fstream"
+#include "indice.h"
+#include "btree.h"
+#include "nodo.h"
 using namespace std;
 namespace Ui {
 class cruzararbol;

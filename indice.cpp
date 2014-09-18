@@ -26,7 +26,7 @@ QString indice::getRRN(char estruc){
         }
         return compRRN;
     }else{
-        QString compRRN = "                    ";
+        QString compRRN = "          ";
         for(int i=0;i<RRN.length();i++){
             compRRN[i]=RRN[i];
         }

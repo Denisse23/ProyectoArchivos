@@ -184,6 +184,159 @@ void cruzararbol::on_combocampos_cruzararbol_activated(const QString &arg1)
                  columnaeliminar=col;
         }
     }
+     ui->tabla_cruzararbol->removeColumn(columnaeliminar);
+     btree arbol;
+     QString nombreindicea;
+     int cantr=0;
+
+     if(campo1==false){
+         nombreindicea = file2.fileName()+"x";
+         cantr=campos2[columnaeliminar-campos1.count()].getTamano();
+     }else{
+         nombreindicea = file1.fileName()+"x";
+         cantr=campos1[columnaeliminar-campos2.count()].getTamano();
+     }
+     nombreindicea[nombreindicea.length()-5] = 'b',nombreindicea[nombreindicea.length()-4] = 't';
+     nombreindicea[nombreindicea.length()-3] = 'i',nombreindicea[nombreindicea.length()-2] = 'd';
+     QFile filea(nombreindicea);
+     if (!filea.open(QIODevice::ReadWrite | QIODevice::Text))
+      return;
+     QTextStream in(&filea);
+     QString line;
+     while(!in.atEnd()){
+         line=in.readLine();
+         nodo temp;
+         QList<indice> indices;
+         QList<int> hijos;
+         int camino=0;
+         for(int i=0;i<63;i++){
+             indices.append(indice(line.mid(camino,cantr),line.mid(cantr+camino,10)));
+             camino+=cantr+10;
+         }
+         camino-=cantr+6;
+         for(int i=0;i<64;i++){
+             hijos.append(line.mid(camino,4).toInt());
+             camino+=4;
+         }
+         temp.setData(indices);
+         temp.setSons(hijos);
+         arbol.insertNodo(temp);
+     }
+     filea.close();
+     int padre=0;
+     bool encontro = false;
+     for(int i=0;i<arbol.getNodos().count();i++){
+        for(int j=0;j<arbol.getNodos()[i].getSons().count();j++){
+            if(arbol.getNodos()[i].getSons()[j]==i){
+                j=arbol.getNodos()[i].getSons().count();
+                encontro=true;
+            }
+        }
+        if(encontro==false){
+            padre=i;
+            break;
+        }
+     }
+     file1.seek(0);
+     file2.seek(0);
+     if(campo1==false){
+         QTextStream in(&file1);
+         QString line;
+         bool empezar = false;
+         while(!in.atEnd()){
+             line = in.readLine();
+             if(empezar){
+                 if(line[0]!='*'){
+                     int rowc = ui->tabla_cruzararbol->rowCount();
+                     int camino=0;
+                     ui->tabla_cruzararbol->insertRow(rowc);
+                     QString data;
+                     for(int o=0;o<campos1.count();o++){
+                         data= line.mid(camino,campos1[o].getTamano());
+                        ui->tabla_cruzararbol->setItem(rowc,o,new QTableWidgetItem(data));
+                      camino+=campos1[o].getTamano();
+                   }
+                 }
+             }
+             if(line=="$")
+                 empezar=true;
+
+         }
+
+       QTextStream in2(&file2);
+       QString line2;
+        for(int i=0;i<ui->tabla_cruzararbol->rowCount();i++){
+            QTableWidgetItem* item = ui->tabla_cruzararbol->item(i,campollave);
+            QString llave = item->text();
+            QList<int> partes;
+            if(campos2[columnaeliminar-campos1.count()].getTipo()=="Char"){
+                partes = arbol.buscarIndice(llave,padre,1);
+             }else{
+                partes = arbol.buscarIndice(llave,padre,2);
+            }
+            if(partes[0]!=-1){
+                file2.seek(arbol.getNodos()[partes[0]].getData()[partes[1]].getRRN('a').toInt());
+                line2=in2.readLine();
+                int camino=0;
+                for(int k=0;k<campos2.count();k++){
+                    if(k!=columnaeliminar-campos1.count()){
+                        ui->tabla_cruzararbol->setItem(i,k+(campos1.count()-1),new QTableWidgetItem(line.mid(camino,campos2[k].getTamano())));
+                    }
+                    camino+=campos2[k].getTamano();
+                }
+            }
+        }
+
+       }else{
+         QTextStream in(&file2);
+         QString line;
+         bool empezar = false;
+         while(!in.atEnd()){
+             line = in.readLine();
+             if(empezar){
+                 if(line[0]!='*'){
+                     int rowc = ui->tabla_cruzararbol->rowCount();
+                     int camino=0;
+                     ui->tabla_cruzararbol->insertRow(rowc);
+                     QString data;
+                     for(int o=0;o<campos2.count();o++){
+                         data= line.mid(camino,campos2[o].getTamano());
+                         ui->tabla_cruzararbol->setItem(rowc,o,new QTableWidgetItem(data));
+                      camino+=campos2[o].getTamano();
+                   }
+                }
+              }
+             if(line=="$")
+                 empezar=true;
+
+         }
+
+         QTextStream in2(&file1);
+         QString line2;
+          for(int i=0;i<ui->tabla_cruzararbol->rowCount();i++){
+              QTableWidgetItem* item = ui->tabla_cruzararbol->item(i,campollave);
+              QString llave = item->text();
+              QList<int> partes;
+              if(campos1[columnaeliminar-campos2.count()].getTipo()=="Char"){
+                  partes = arbol.buscarIndice(llave,padre,1);
+               }else{
+                  partes = arbol.buscarIndice(llave,padre,2);
+              }
+              if(partes[0]!=-1){
+                  file1.seek(arbol.getNodos()[partes[0]].getData()[partes[1]].getRRN('a').toInt());
+                  line2=in2.readLine();
+                  int camino=0;
+                  for(int k=0;k<campos1.count();k++){
+                      if(k!=columnaeliminar-campos2.count()){
+                          ui->tabla_cruzararbol->setItem(i,k+(campos2.count()-1),new QTableWidgetItem(line.mid(camino,campos1[k].getTamano())));
+                      }
+                      camino+=campos1[k].getTamano();
+                  }
+              }
+          }
+
+
+     }
 
 
 
